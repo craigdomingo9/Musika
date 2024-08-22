@@ -1,0 +1,7 @@
+django==4.2.14
+djangorestframework==3.15.2
+pillow
+cryptography==41.0.7
+django-allauth==0.52.0
+django-cors-headers==4.4.0
+requests

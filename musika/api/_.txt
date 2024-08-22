@@ -1,0 +1,23 @@
+# Open Django shell
+python manage.py shell
+
+# Import the models
+from yourapp.models import Feature, SubscriptionPlan
+
+# Create Features
+feature1 = Feature.objects.create(name='Unlimited Storage', description='Store as much data as you need.')
+feature2 = Feature.objects.create(name='Priority Support', description='Get support prioritized for faster response times.')
+feature3 = Feature.objects.create(name='Custom Domain', description='Use your own domain name for your site.')
+
+# Create Subscription Plans
+free_plan = SubscriptionPlan.objects.create(name='Free', price=0.00, duration=30, is_active=True)
+basic_plan = SubscriptionPlan.objects.create(name='Basic', price=9.99, duration=30, is_active=True)
+premium_plan = SubscriptionPlan.objects.create(name='Premium', price=19.99, duration=30, is_active=True)
+
+# Add features to plans
+free_plan.features.add(feature1)
+basic_plan.features.add(feature1, feature2)
+premium_plan.features.add(feature1, feature2, feature3)
+
+# Close the shell
+exit()

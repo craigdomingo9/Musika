@@ -1,0 +1,39 @@
+import variables from "@/utils/variables";
+import ProductItems from "../ProductItems";
+
+type Props = {
+    id: number,
+    category: number,
+}
+
+
+async function SimilarProducts({id, category} : Props) {
+    
+    const url = `http://localhost:8000/api/similar-products/id=${id}&category=${category}`;
+
+    const options: RequestInit = {
+        method: "GET",
+        headers: {
+            accept: "application/json"
+        },
+        next:{
+            revalidate: variables.caching.products
+        }
+    }
+
+    const response = await fetch(url,options);
+    const data = (await response.json()) as Product[];
+
+  return (
+    <div className="pt-2 mb-[5rem]">
+        <div className="px-2">
+            <p className="text-xl font-semibold">You May Also Like</p>
+        </div>
+        <div className="px-2 pt-4 w-full flex overflow-x-scroll overflow-y-hidden">
+            <ProductItems products={data} row={true} />
+        </div>
+    </div>
+  )
+}
+
+export default SimilarProducts
