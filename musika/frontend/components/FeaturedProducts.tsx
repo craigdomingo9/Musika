@@ -22,7 +22,7 @@ async function FeaturedProducts() {
     <>
         <h1 className="text-xl py-4 pt-8 font-semibold opacity-75 ml-4">Featured Products</h1>
         <div className="grid w-full grid-cols-2 overflow-y-scroll [&>*:last-child]:mb-10"> 
-            <ProductItems products={data} row={false} explore={false} />
+            <ProductItems products={data} row={false} />
         </div>
     </>
   )
