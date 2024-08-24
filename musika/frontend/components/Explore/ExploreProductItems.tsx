@@ -25,7 +25,7 @@ function ExploreProductItems({products}: Props) {
                 on_sale: product.on_sale ? 1 : 0,
             }
             }} key={product.id}>
-                <div className="h-[30rem] py-5 pt-2 snap-start ">
+                <div className="h-[25rem] py-5 pt-2 snap-start ">
                     <div className="h-5/6">
                         {product.images && (
                             <Image className="min-h-full" src={`${base_url}${product.images[0].image}`} width={500} height={500} alt="Product" />
