@@ -9,7 +9,7 @@ function BusinessDetails({details}: Props) {
     
     return (
     <div className="w-full h-60 border-">
-        <div className="grid grid-cols-2 h-full">
+        <div className="grid grid-cols-2 h-full overflow-clip">
             <div className="m-auto">
                 {details?.logo ? (
                     <div className="p-4 grid max-w-full">
