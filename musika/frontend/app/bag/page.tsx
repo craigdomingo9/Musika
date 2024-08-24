@@ -1,3 +1,4 @@
+import ProductsInBag from '@/components/Bag/ProductsInBag'
 import Header from '@/components/Header'
 import NavigationBar from '@/components/NavigationBar'
 
@@ -6,6 +7,7 @@ function Bag() {
     <div>
       <Header />
       <NavigationBar />
+      <ProductsInBag />
     </div>
   )
 }

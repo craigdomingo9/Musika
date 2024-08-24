@@ -1,9 +1,11 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 
 interface Item {
   id: number;
   price: number;
+  quantity: number;
 }
 
 interface BagStore {
@@ -12,6 +14,7 @@ interface BagStore {
   removeItem: (id: number) => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  resetBag: () => void;
 }
 
 const useBagStore = create<BagStore>()(
@@ -33,6 +36,9 @@ const useBagStore = create<BagStore>()(
     },
     getTotalItems: () => {
       return get().items.length;
+    },
+    resetBag: () => {
+      set({ items: [] });
     },
     }),
     {
