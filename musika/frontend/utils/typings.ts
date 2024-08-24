@@ -97,3 +97,7 @@ type ProductDetails = {
     attribute_value: string,
 }
 
+type CurrentProduct = {
+    id: number;
+    price: number;
+}

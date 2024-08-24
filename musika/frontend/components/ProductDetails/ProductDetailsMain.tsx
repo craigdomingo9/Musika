@@ -1,8 +1,8 @@
 import variables from "@/utils/variables";
-
 import ProductDetailsMainContent from "./ProductDetailsMainContent";
 import SimilarProducts from "./SimilarProducts";
 import ProductDetailsButtons from "./ProductDetailsButtons";
+import ProductDetailsAddCurrentProduct from "./ProductDetailsAddCurrentProduct";
   
 
 type Props = {
@@ -14,6 +14,7 @@ type Images = {
   image: string,
   alt: string,
 }
+
 
 
 async function ProductDetailsMain({id}: Props) {
@@ -72,9 +73,15 @@ async function ProductDetailsMain({id}: Props) {
 
     const product_details : ProductDetails[] = [main_details,...variants]
 
+    const current_product : CurrentProduct = {
+      id: main_details["id"],
+      price: (main_details.on_sale ? main_details["sale_price"] : main_details["price"]) 
+    }
+
 
     return (
       <>
+          <ProductDetailsAddCurrentProduct product_details={current_product}  />
           <ProductDetailsMainContent 
             images={images} 
             global_product_details={global_product_details} 
