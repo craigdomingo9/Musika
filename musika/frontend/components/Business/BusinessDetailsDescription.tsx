@@ -38,4 +38,5 @@ function BusinessDetailsDescription({details}: Props) {
   )
 }
 
+
 export default BusinessDetailsDescription
