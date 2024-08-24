@@ -75,7 +75,7 @@ async function ProductDetailsMain({id}: Props) {
 
     const current_product : CurrentProduct = {
       id: main_details["id"],
-      price: (main_details.on_sale ? main_details["sale_price"] : main_details["price"]) 
+      price: Number(main_details.on_sale ? main_details["sale_price"] : main_details["price"]) 
     }
 
 
