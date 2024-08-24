@@ -14,7 +14,7 @@ function BusinessHeader({name}: Props) {
                 </svg>
                 <p className="font-bold opacity-80 text-sm m-auto">Home</p>
             </Link>
-            <p className="font-semibold">{name}</p>
+            <p className="font-bold">{name}</p>
         </div>
     </header>
   )
