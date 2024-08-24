@@ -26,10 +26,10 @@ SECRET_KEY = 'django-insecure-$fgzlc%w#(%gi0qqar+p%z@8!k&qoh0$pjnt6t(pz4=$_=(bst
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["13.233.124.196","localhost"]
+ALLOWED_HOSTS = ["13.233.124.196","localhost","127.0.0.1"]
 
 # Actual directory user files go to
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'api/media')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'musika/media')
 
 # URL used to access the media
 MEDIA_URL = '/media/'
