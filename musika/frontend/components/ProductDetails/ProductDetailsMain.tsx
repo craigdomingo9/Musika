@@ -2,6 +2,7 @@ import variables from "@/utils/variables";
 
 import ProductDetailsMainContent from "./ProductDetailsMainContent";
 import SimilarProducts from "./SimilarProducts";
+import ProductDetailsButtons from "./ProductDetailsButtons";
   
 
 type Props = {
@@ -82,6 +83,7 @@ async function ProductDetailsMain({id}: Props) {
             catalog_details={catalog_details}
           />
           <SimilarProducts id={id} category={data["catalog"]["category"]} />
+          <ProductDetailsButtons />
       </>
     )
 }

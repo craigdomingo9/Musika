@@ -11,8 +11,6 @@ import { Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import ProductDetailsAddToBagButton from "./ProductDetailsAddToBagButton";
-
 
 type Props = {
     images: ProductImage[],
@@ -125,7 +123,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
             </div>
           </Link>
       </div>
-      <ProductDetailsAddToBagButton />
+      
     </div>
   )
 }

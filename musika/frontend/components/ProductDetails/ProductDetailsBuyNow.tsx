@@ -1,0 +1,11 @@
+import { Button } from "../ui/button"
+
+function ProductDetailsBuyNow() {
+  return (
+    <div className="w-1/2 p-2">
+        <Button className="w-full h-16 bg-green-600">Buy Now</Button>
+    </div>
+  )
+}
+
+export default ProductDetailsBuyNow
