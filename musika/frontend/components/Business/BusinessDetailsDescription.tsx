@@ -21,20 +21,20 @@ function BusinessDetailsDescription({details}: Props) {
     const created_at = format(new Date(details?.created_at), 'd MMMM yyyy');
 
   return (
-    <>
+    
     <div className="my-auto" onClick={() => setTruncate(!truncate)}>
-            <p className="font-bold opacity-80 text-lg">{details.name}</p>
-            <p className="text-xs opacity-70">Joined: {created_at}</p>
-            <div className={cn("text-sm")}>
-                {truncate ? (
-                truncatefn(details.description,60,"...")
-                ) : 
-                details.description
-                }
-                <p className="text-blue-700 text-xs">Read {truncate ? "more" : "less"}</p>
-            </div>
+        <p className="font-bold opacity-80 text-lg">{details.name}</p>
+        <p className="text-xs opacity-70">Joined: {created_at}</p>
+        <div className={cn("text-sm")}>
+            {truncate ? (
+            truncatefn(details.description,60,"...")
+            ) : 
+            details.description
+            }
+            <p className="text-blue-700 text-xs">Read {truncate ? "more" : "less"}</p>
         </div>
-    </>
+    </div>
+    
   )
 }
 
