@@ -13,7 +13,7 @@ function BusinessDetails({details}: Props) {
             <div className="m-auto">
                 {details?.logo ? (
                     <div className="p-4 grid max-w-full">
-                        <Image className="rounded-full max-w-full border-2 object-contain" src={details?.logo} width={500} height={500} alt="Business Logo" />
+                        <Image className="rounded-full max-w-full object-contain" src={details?.logo} width={500} height={500} alt="Business Logo" />
                     </div>
                 ) : (
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-20">
