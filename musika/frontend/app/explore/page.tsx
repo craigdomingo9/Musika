@@ -34,13 +34,12 @@ async function ExplorePage({searchParams : { category }}: Props) {
   const response = await fetch(url,options);
   const data = (await response.json());
 
-  // console.log(data)
 
   return (
     <>
         <Header />
         <Categories name={category} />
-        <div>
+        <div className="overflow-y-scroll">
           <h1 className="text-2xl font-bold pl-4 pb-2">{category==undefined ? "Explore": `Explore: ${category}`}</h1>
           <ExploreProductItems products={data} />
         </div>

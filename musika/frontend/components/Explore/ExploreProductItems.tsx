@@ -25,19 +25,21 @@ function ExploreProductItems({products}: Props) {
                 on_sale: product.on_sale ? 1 : 0,
             }
             }} key={product.id}>
-                <div className="h-[28rem] py-5 pt-2 snap-start ">
-                    <div className="h-20rem">
+                <div className="h-[90vh] grid py-5 pt-2 snap-start">
+                    <div className="max-h-[55vh]">
                         {product.images && (
-                            <Image className="min-h-full" src={`${base_url}${product.images[0].image}`} width={500} height={500} alt="Product" />
+                            <Image className="h-full object-contain" src={`${base_url}${product.images[0].image}`} width={500} height={500} alt="Product" />
                         )}
                     </div>
-                    <div className={cn("mx-3 pt-1 border-t border-dashed")}>
-                        <p className="text-lg font-bold">{product.name}</p>
-                        <p className="text-xs opacity-70">{product.description}</p>
-                    </div>
-                    <div className="flex mx-3">
-                        <p className={cn("text-lg",product.on_sale && "line-through txt-color")}>${product.price}</p>
-                        <p className={cn("hidden",product.on_sale && "inline-block pl-3 text-lg")}>${product.sale_price}</p>
+                    <div className="h-[15vh]">
+                        <div className={cn("mx-3 pt-1 border-t border-dashed")}>
+                            <p className="text-lg font-bold">{product.name}</p>
+                            <p className="text-xs opacity-70">{product.description}</p>
+                        </div>
+                        <div className="flex mx-3">
+                            <p className={cn("text-lg",product.on_sale && "line-through txt-color")}>${product.price}</p>
+                            <p className={cn("hidden",product.on_sale && "inline-block pl-3 text-lg")}>${product.sale_price}</p>
+                        </div>
                     </div>
                 </div>
             </Link>
