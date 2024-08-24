@@ -1,14 +1,24 @@
 "use client"
+import useBagStore from '@/stores/BagStore';
 import navigators from '@/utils/navigator';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 
 function NavigationBar() {
 
     let [homeActive, exploreActive, bagActive, profileActive] = navigators();
+
+    const products = useBagStore((state) => state.getTotalItems());
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+        setCount(products)
+    },[products])
+
   return (
     <div className="fixed bottom-0 left-0 w-full shadow-top md:hidden bg-white">
-        <div className="flex justify-around py-3">
+        <div className="grid grid-cols-4 py-3">
         <Link href={"/"} className="grid items-center text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
 
@@ -42,7 +52,7 @@ function NavigationBar() {
             <p className={`text-sm font-bold ${exploreActive && 'font-extrabold text-black'}`}>Explore</p>
         </Link>
         <Link href={"/bag"} className="grid text-center text-gray-600 hover:text-gray-800">
-            <div className='text-center flex w-full justify-center'>
+            <div className='relative text-center flex justify-center'>
                 {bagActive ? 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
                     <path fillRule="evenodd" d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z" clipRule="evenodd" />
@@ -51,8 +61,10 @@ function NavigationBar() {
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                 </svg>
-
             }
+            <p className='absolute left-[60%] top-0 font-bold text-xs txt-color'>
+                {count}
+            </p>
             </div>
             <p className={`text-sm font-bold ${bagActive && 'font-extrabold text-black'}`}>Bag</p>
         </Link>

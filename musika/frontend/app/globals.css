@@ -67,7 +67,11 @@ div {
 }
 
 .bg-color {
-  background-color: rgba(180, 83, 9, 0.75);
+  @apply bg-amber-600 opacity-75;
+}
+
+.bg-color-btn {
+  @apply bg-amber-600 opacity-95;
 }
 
 .txt-color {
