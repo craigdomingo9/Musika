@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { format } from 'date-fns';
@@ -31,7 +31,7 @@ function BusinessDetailsDescription({details}: Props) {
                 ) : 
                 details.description
                 }
-                <p className="text-blue-700 text-xs">Read {truncate ? "more" : "less"}</p>
+                <p className="text-blue-700 text-xs">Read {truncate} {truncate ? "more" : "less"}</p>
             </div>
         </div>
     </>
