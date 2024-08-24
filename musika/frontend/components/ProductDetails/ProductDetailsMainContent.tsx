@@ -58,7 +58,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
                       align: "start",
                       loop: true,
                     }}>
-            <CarouselContent className="h-[27rem]">
+            <CarouselContent className="h-[22rem]">
               {images.map((image) => (
                 <CarouselItem key={image?.id}>
                     <Image className="min-h-full object-fill min-w-full h-full" src={`${image?.image}`} height={200} width={400} alt={image.alt ? image.alt : ""} priority />
