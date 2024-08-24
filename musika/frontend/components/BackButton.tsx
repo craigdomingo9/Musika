@@ -1,9 +1,9 @@
-"use client"
-import { useRouter } from "next/navigation"
+"use client";
+import { useRouter } from "next/navigation";
 
 
 function BackButton() {
-    const router = useRouter();
+  const router = useRouter();
   return (
     <>
         <div className="flex" onClick={() => router.back()}>
