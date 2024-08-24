@@ -10,7 +10,7 @@ type Props = {
 
 function BusinessDetailsDescription({details}: Props) {
 
-    let [truncate, setTruncate] = useState<true|false>(true);
+    let [truncate, setTruncate] = useState<boolean>(true);
 
     
     const truncatefn = (text: string, length: number, suffix: string = '...'): string => {
