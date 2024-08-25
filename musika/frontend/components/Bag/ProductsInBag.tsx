@@ -21,7 +21,7 @@ function ProductsInBag() {
       </div>
       <div className="grid grid-cols-1 last:mb-28 ">
         {products.map((product) => (
-          <ProductInBag product={product} />
+          <ProductInBag key={product.id} product={product} />
         ))}
       </div>
       
