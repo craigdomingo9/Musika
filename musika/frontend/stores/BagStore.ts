@@ -2,45 +2,73 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
-interface Item {
-  id: number;
-  price: number;
-  quantity: number;
-}
+
 
 interface BagStore {
-  items: Item[];
-  addItem: (item: Item) => void;
-  removeItem: (id: number) => void;
+  items: BagProduct[];
+  addItem: (item: BagProduct) => void;
+  removeFromBag: (id: number) => void;
   getTotalPrice: () => number;
+  decreaseItemQuantity: (id: number) => void;
   getTotalItems: () => number;
+  getItemCounts: () => Record<number, number>;
   resetBag: () => void;
 }
 
+
 const useBagStore = create<BagStore>()(
   persist(
+    immer(
     (set, get) => ({
     items: [],
     addItem: (item) => {
-      set((state) => ({
-        items: [...state.items, item],
-      }));
+      set((state) => {
+        const existingItem = state.items.find((i: BagProduct) => i.id === item.id);
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          state.items.push(item);
+        }
+      });
     },
-    removeItem: (id) => {
-      set((state) => ({
-        items: state.items.filter((item) => item.id !== id),
-      }));
+    removeFromBag: (id) => {
+      set((state) => {
+        const index = state.items.findIndex((i) => i.id === id);
+        if (index !== -1) {
+          state.items.splice(index, 1);
+        }
+      });
     },
-    getTotalPrice: () => {
-      return get().items.reduce((total, item) => total + item.price, 0);
+    decreaseItemQuantity: (id) => {
+      set((state) => {
+        const item = state.items.find((i) => i.id === id);
+        if (item && item.quantity > 1) {
+          item.quantity--;
+        } else {
+          const index = state.items.findIndex((i) => i.id === id);
+          if (index !== -1) {
+            state.items.splice(index, 1);
+          }
+        }
+      });
     },
     getTotalItems: () => {
       return get().items.length;
     },
+    getItemCounts: () => {
+      const itemCounts: Record<number, number> = {};
+      get().items.forEach((item) => {
+        itemCounts[item.id] = (itemCounts[item.id] || 0) + item.quantity;
+      });
+      return itemCounts;
+    },
+    getTotalPrice: () => {
+      return get().items.reduce((total, item) => total + (item.price * item.quantity), 0);
+    },
     resetBag: () => {
       set({ items: [] });
     },
-    }),
+    })),
     {
       name: "storage",
     }

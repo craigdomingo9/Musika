@@ -97,7 +97,19 @@ type ProductDetails = {
     attribute_value: string,
 }
 
+type BagProduct = {
+    id: number,
+    name: string,
+    description: string,
+    image: string,
+    price: number,
+    on_sale: boolean,
+    sale_price: number,
+    quantity: number,
+}
+
 type CurrentProduct = {
     id: number;
     price: number;
+    quantity: number;
 }

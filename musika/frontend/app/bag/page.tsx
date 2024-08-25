@@ -1,3 +1,4 @@
+import CheckoutButton from '@/components/Bag/CheckoutButton'
 import ProductsInBag from '@/components/Bag/ProductsInBag'
 import Header from '@/components/Header'
 import NavigationBar from '@/components/NavigationBar'
@@ -8,6 +9,7 @@ function Bag() {
       <Header />
       <NavigationBar />
       <ProductsInBag />
+      <CheckoutButton />
     </div>
   )
 }

@@ -17,7 +17,7 @@ function NavigationBar() {
     },[products])
 
   return (
-    <div className="fixed bottom-0 left-0 w-full shadow-top md:hidden bg-white">
+    <div className="fixed z-50 bottom-0 left-0 w-full shadow-top md:hidden bg-white">
         <div className="grid grid-cols-4 py-3">
         <Link href={"/"} className="grid items-center text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>

@@ -4,18 +4,29 @@ import { create } from 'zustand';
 
 
 interface CurrentProductStore {
-  currentProduct: CurrentProduct;
-  setCurrentProduct: (product: CurrentProduct) => void;
+  currentProduct: BagProduct;
+  setCurrentProduct: (product: BagProduct) => void;
   clearCurrentProduct: () => void;
 }
 
+const BagProductDefault = {
+  id: 0,
+  name: "",
+  image: "",
+  description: "",
+  price: 0,
+  on_sale: false,
+  sale_price: 0,
+  quantity: 0,
+}
+
 const useCurrentProductStore = create<CurrentProductStore>((set) => ({
-  currentProduct: {id: 0, price: 0},
+  currentProduct: BagProductDefault,
   setCurrentProduct: (product) => {
     set({ currentProduct: product });
   },
   clearCurrentProduct: () => {
-    set({ currentProduct: {id: 0, price: 0} });
+    set({ currentProduct: BagProductDefault });
   },
 }));
 

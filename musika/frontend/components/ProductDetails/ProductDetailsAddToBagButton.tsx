@@ -11,8 +11,11 @@ function ProductDetailsAddToBagButton() {
 
   const current_product = useCurrentProductStore((state) => state.currentProduct);
 
+  const items = useBagStore((state) => state.items);
+
   const addToBag = () => {
     addProductToStore(current_product);
+
 
     toast({
       variant: "success",

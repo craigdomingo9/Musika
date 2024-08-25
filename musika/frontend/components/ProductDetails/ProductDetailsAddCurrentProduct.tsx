@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 
 type Props = {
-    product_details: CurrentProduct;
+    product_details: BagProduct;
 }
 
 
@@ -18,7 +18,7 @@ function ProductDetailsAddCurrentProduct({product_details}: Props) {
 
 
     useEffect(() => {
-        addCurrentProductStore(product_details)
+        addCurrentProductStore(product_details);
     },[current_product])
     
     

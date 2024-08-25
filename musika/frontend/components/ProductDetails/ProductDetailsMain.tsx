@@ -73,9 +73,15 @@ async function ProductDetailsMain({id}: Props) {
 
     const product_details : ProductDetails[] = [main_details,...variants]
 
-    const current_product : CurrentProduct = {
-      id: main_details["id"],
-      price: Number(main_details.on_sale ? main_details["sale_price"] : main_details["price"]) 
+    const current_product : BagProduct = {
+      id: Number(main_details["id"]),
+      name: global_product_details["name"],
+      description: global_product_details["description"],
+      image: images[0].image,
+      price: Number(main_details.on_sale ? main_details["sale_price"] : main_details["price"]),
+      on_sale: main_details["on_sale"],
+      sale_price: Number(main_details["sale_price"]),
+      quantity: 1
     }
 
 
