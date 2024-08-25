@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import useBagStore from "@/stores/BagStore";
+import Link from "next/link";
 
 
 type Props = {
@@ -18,10 +19,16 @@ function ProductInBag({product}: Props) {
         <Image src={product.image} className="max-h-full object-fit rounded-md" width={140} height={140} alt="Bag Product" />
       </div>
       <div className="grid grid-rows-2 w-[50vw] relative">
-        <div>
+        <Link href={{
+          pathname: "product",
+          query: {
+            id: product.id,
+            sale: product.on_sale
+          }
+        }}>
           <p className="font-semibold">{product.name}</p>
           <p className="text-xs font-semibold">{product.description}</p>
-        </div>
+        </Link>
         <div className="m-auto min-w-full grid grid-cols-2">
           <div className=" m-auto grid grid-cols-3">
             <Button className="size-8 bg-color-btn" onClick={() => decreaseItemQuantity(product.id)}>-</Button>

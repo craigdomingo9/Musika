@@ -1,9 +1,12 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+
+
+
 type Props = {
     products: Product[]
-  }
+}
   
 
 function ExploreProductItems({products}: Props) {
@@ -16,7 +19,7 @@ function ExploreProductItems({products}: Props) {
 
     
   return (
-    <div className="grid snap-y snap-proximity h-screen w-screen mx:auto overflow-scroll">
+    <div className="grid snap-y snap-mandatory h-screen w-screen mx:auto overflow-scroll">
         {products.map((product) => (
             <Link href={{
             pathname: "/product",
@@ -25,7 +28,7 @@ function ExploreProductItems({products}: Props) {
                 on_sale: product.on_sale ? 1 : 0,
             }
             }} key={product.id}>
-                <div className="h-[90vh] grid py-5 pt-2 snap-start">
+                <div className="h-[65vh] grid py-5 pt-2 snap-start">
                     <div className="max-h-[55vh]">
                         {product.images && (
                             <Image className="h-full object-contain" src={`${base_url}${product.images[0].image}`} width={500} height={500} alt="Product" />
