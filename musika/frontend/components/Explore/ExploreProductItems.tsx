@@ -47,7 +47,6 @@ function ExploreProductItems({products}: Props) {
                 </div>
             </Link>
         ))}
-               
     </div>
   )
 }
