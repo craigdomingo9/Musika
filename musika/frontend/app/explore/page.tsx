@@ -36,7 +36,7 @@ async function ExplorePage({searchParams : { category }}: Props) {
 
 
   return (
-    <>
+    <div>
         <Header />
         <Categories name={category} />
         <h1 className="text-2xl font-bold pl-4 pb-2">{category==undefined ? "Explore": `Explore: ${category}`}</h1>
@@ -44,7 +44,7 @@ async function ExplorePage({searchParams : { category }}: Props) {
           <ExploreProductItems products={data} />
         </div>
         <NavigationBar />
-    </>
+    </div>
   )
 }
 
