@@ -8,7 +8,7 @@ type Props = {
 function BusinessDetails({details}: Props) {
     
     return (
-    <div className="w-full h-60 border-">
+    <div className="w-full h-60 md:h-96">
         <div className="grid grid-cols-2 h-full overflow-clip">
             <div className="m-auto">
                 {details?.logo ? (

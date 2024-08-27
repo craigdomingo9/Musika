@@ -42,11 +42,11 @@ async function page({params: {business}}: Props) {
     
 
   return (
-    <>
+    <div className="sm:mx-[15%]">
       <BusinessHeader name={business_data.name} />
       <BusinessDetails details={business_description} />
       <BusinessMainContent business={business} business_locations={business_description.location} />
-    </>
+    </div>
   )
 }
 

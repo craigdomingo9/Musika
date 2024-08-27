@@ -20,11 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <main className="sm:grid sm:grid-cols-[10%_90%] md:grid-cols-[10%_80%_10%] place-content-center ">
-          
+        <main className="sm:grid sm:grid-cols-[10%_90%] md:grid-cols-[10%_80%_10%]">
             <NavigationBar />
-          
           <div>
             {children}
           </div>

@@ -1,5 +1,6 @@
 import Categories from "@/components/Categories"
 import ExploreProductItems from "@/components/Explore/ExploreProductItems"
+import Header from "@/components/Header"
 import variables from "@/utils/variables"
 
 type Props = {
@@ -33,6 +34,7 @@ async function ExplorePage({searchParams : { category }}: Props) {
 
   return (
     <div>
+        <Header />
         <Categories name={category} />
         <h1 className="text-2xl font-bold pl-4 pb-2">{category==undefined ? "Explore": `Explore: ${category}`}</h1>
         <div className="overflow-y-scroll">

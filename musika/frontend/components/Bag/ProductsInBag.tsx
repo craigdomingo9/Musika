@@ -18,6 +18,7 @@ function ProductsInBag() {
           <h1 className="text-3xl font-semibold">Your Bag:</h1>
         </div>
         <p className="text-sm font-semibold">Review the items in your bag and checkout when ready</p>
+        
       </div>
       <div className="grid grid-cols-1 last:mb-28 ">
         {products.map((product) => (

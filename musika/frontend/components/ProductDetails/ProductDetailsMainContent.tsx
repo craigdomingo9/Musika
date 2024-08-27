@@ -11,6 +11,7 @@ import { Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import ProductDetailsButtons from "./ProductDetailsButtons";
 
 type Props = {
     images: ProductImage[],
@@ -50,7 +51,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
 
 
   return (
-    <div ref={containerRef} className="sm:mt-5 sm:grid sm:grid-cols-[55%_45%] max-w-full">
+    <div ref={containerRef} className="sm:mt-5 sm:grid sm:grid-cols-[50%_50%] max-w-full">
       <div className="relative">
         <Carousel setApi={setApi} opts={{
                       align: "start",
@@ -122,6 +123,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
               </div>
             </div>
           </Link>
+          <ProductDetailsButtons />
       </div>
       
     </div>

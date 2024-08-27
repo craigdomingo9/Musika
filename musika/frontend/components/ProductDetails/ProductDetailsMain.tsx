@@ -96,7 +96,7 @@ async function ProductDetailsMain({id}: Props) {
             catalog_details={catalog_details}
           />
           <SimilarProducts id={id} category={data["catalog"]["category"]} />
-          <ProductDetailsButtons />
+          
       </>
     )
 }
