@@ -22,8 +22,11 @@ async function Categories({name}: Props) {
     const categories = (await response.json());
 
     return (
-    <div className="flex overflow-x-scroll overflow-y-hidden pl-4">
-        <CategoryItems categories={categories} name={name}/>
+    <div>
+
+        <div className="flex sm:mx-[5%] overflow-x-scroll overflow-y-hidden pl-4 sm:pl-0">
+            <CategoryItems categories={categories} name={name}/>
+        </div>
     </div>
     )
 }

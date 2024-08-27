@@ -17,9 +17,9 @@ function NavigationBar() {
     },[products])
 
   return (
-    <div className="fixed z-50 bottom-0 left-0 w-full shadow-top md:hidden bg-white">
-        <div className="grid grid-cols-4 py-3">
-        <Link href={"/"} className="grid items-center text-center text-gray-600 hover:text-gray-800">
+    <div className="fixed sm:sticky sm:h-[80vh] sm:top-[10%] z-50 bottom-0 left-0 w-full shadow-top bg-white">
+        <div className="grid grid-cols-4 py-3 sm:grid-cols-1 sm:flex sm:h-screen sm:flex-col sm:justify-start overflow-hidden">
+        <Link href={"/"} className="grid sm:py-4 items-center text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
 
                 {homeActive ? 
@@ -36,7 +36,7 @@ function NavigationBar() {
             <p className={`text-sm font-bold ${homeActive && 'font-extrabold text-black'}`}>Home</p>
         </Link>
 
-        <Link href={"/explore"} className="grid text-center text-gray-600 hover:text-gray-800">
+        <Link href={"/explore"} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
                 {exploreActive ? 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -51,7 +51,7 @@ function NavigationBar() {
             </div>
             <p className={`text-sm font-bold ${exploreActive && 'font-extrabold text-black'}`}>Explore</p>
         </Link>
-        <Link href={"/bag"} className="grid text-center text-gray-600 hover:text-gray-800">
+        <Link href={"/bag"} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
             <div className='relative text-center flex justify-center'>
                 {bagActive ? 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -68,7 +68,7 @@ function NavigationBar() {
             </div>
             <p className={`text-sm font-bold ${bagActive && 'font-extrabold text-black'}`}>Bag</p>
         </Link>
-        <Link href={"/profile"} className="grid text-center text-gray-600 hover:text-gray-800">
+        <Link href={"/profile"} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
                 {profileActive ? 
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">

@@ -6,12 +6,10 @@ import OnSaleProducts from "@/components/OnSaleProducts";
 
 export default function Home() {
   return (
-    <>
-      <Header />
+    <div className="sm:mx-[12%]">
       <Categories name={""} />
       <OnSaleProducts />
       <FeaturedProducts />
-      <NavigationBar />
-    </>
+    </div>
   );
 }
