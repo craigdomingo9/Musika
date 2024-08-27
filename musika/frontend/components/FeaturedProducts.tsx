@@ -16,7 +16,7 @@ async function FeaturedProducts() {
     }
 
     const response = await fetch(url,options);
-    const data = (await response.json());
+    const data = (await response.json()) as Product[];
 
   return (
     <>

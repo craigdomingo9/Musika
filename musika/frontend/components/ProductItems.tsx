@@ -37,8 +37,8 @@ function ProductItems({products,row}: ProductItemsProps) {
                   <Image 
                   className={cn("min-w-full h-full w-full rounded",!row && "max-h-full object-contain")} 
                   src={`${base_url}${product.images[0].image}`} 
-                  width={110} 
-                  height={100} 
+                  width={1000} 
+                  height={1000} 
                   quality={90}
                   alt="Product Image" />
                 )}

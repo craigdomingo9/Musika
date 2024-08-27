@@ -19,7 +19,7 @@ function ExploreProductItems({products}: Props) {
 
     
   return (
-    <div className="grid snap-y snap-mandatory h-screen w-screen mx:auto overflow-scroll">
+    <div className="grid md:grid-cols-2 snap-y snap-mandatory h-screen w-screen md:w-full mx:auto overflow-scroll">
         {products.map((product) => (
             <Link href={{
             pathname: "/product",
