@@ -25,11 +25,11 @@ async function SimilarProducts({id, category} : Props) {
     const data = (await response.json()) as Product[];
 
   return (
-    <div className="pt-2 mb-[5rem]">
-        <div className="px-2">
+    <div className="pt-2 mb-[5rem] sm:mt-5">
+        <div className="px-2 sm:pl-0">
             <p className="text-xl font-semibold">You May Also Like</p>
         </div>
-        <div className="px-2 pt-4 w-full flex overflow-x-scroll overflow-y-hidden">
+        <div className="px-2 sm:pl-0 pt-4 w-full flex overflow-x-scroll overflow-y-hidden">
             <ProductItems products={data} row={true} />
         </div>
     </div>

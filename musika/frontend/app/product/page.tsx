@@ -14,11 +14,11 @@ type Props = {
 async function ProductDetails({searchParams: {id, onsale, category}} : Props) {
   
   return (
-    <>
+    <div className="sm:mx-[10%] xl:mx-[20%]">
         <ProductDetailsHeader />
         <ProductDetailsMain id={id} />
         
-    </>
+    </div>
   )
 }
 

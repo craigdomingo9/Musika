@@ -50,7 +50,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
 
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="sm:mt-5 sm:grid sm:grid-cols-[55%_45%] max-w-full">
       <div className="relative">
         <Carousel setApi={setApi} opts={{
                       align: "start",

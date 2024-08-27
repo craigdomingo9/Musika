@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import NavigationBar from "@/components/NavigationBar";
-import HeaderManager from "@/components/HeaderManager";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <HeaderManager />
-        <main className="sm:grid sm:grid-cols-[10%_90%] md:grid-cols-[10%_80%_10%]">
+        <Header />
+        <main className="sm:grid sm:grid-cols-[10%_90%] md:grid-cols-[10%_80%_10%] place-content-center ">
           
             <NavigationBar />
           

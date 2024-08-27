@@ -29,14 +29,14 @@ function ProductItems({products,row}: ProductItemsProps) {
           }
         }} key={product.id}>
           <>
-            <div className={cn("grid w-40 mx-4 bg-opacity-70 h-40",row && "h-36 w-36")}>
+            <div className={cn("grid w-40 mx-4 bg-opacity-70 h-40",row && "h-36 w-36 sm:ml-0 sm:w-60 sm:h-60")}>
               <div className={cn("",!row && "max-h-40 w-full")}>
                 {product.images && (
                   <Image className={cn("min-w-full h-full w-full rounded",!row && "max-h-full object-contain")} src={`${base_url}${product.images[0].image}`} width={110} height={100} alt="" priority />
                 )}
               </div>
             </div>
-            <div className={cn("mx-3 pt-1 border-t border-dashed",!row && "h-28 mx-5")}>
+            <div className={cn("mx-3 sm:ml-0 pt-1 border-t border-dashed",!row && "h-28 mx-5")}>
                 <p className="text-sm font-bold">{truncate(product.name,20)}</p>
                 <p className="text-xs opacity-70">{truncate(product.description,25)}</p>
                 <div className="flex">
