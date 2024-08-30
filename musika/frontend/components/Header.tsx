@@ -9,8 +9,8 @@ function Header() {
                 <h1 className="font-bold align-middle text-slate-600 my-auto">Musika</h1>
             </Link>
             
-            <Link href={"/login"}>
-                <Button variant={"outline"}>
+            <Link href={"/business/login"}>
+                <Button disabled variant={"outline"}>
                     Login
                 </Button>
             </Link>

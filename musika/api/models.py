@@ -6,6 +6,8 @@ import string
 from django.utils import timezone
 from phonenumber_field.modelfields import PhoneNumberField
 from datetime import datetime
+from authentications.models import Credentials
+
 
 # Create your models here.
 def generate_unique_code():
@@ -30,15 +32,20 @@ class ShuffleModelManager(models.Manager):
 """   Business Entity   """
 class Business(models.Model):
     code = models.CharField(max_length=8,primary_key=True,default=generate_unique_code,unique=True)
+    credentials = models.OneToOneField(Credentials,on_delete=models.CASCADE,null=True,related_name="business")
+    
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     categories = models.CharField(max_length=100)
+    
     logo = models.ImageField(upload_to='./images/logo_images',blank=True)
     cover_photo = models.ImageField(upload_to='./images/cover_images',blank=True)
+    
     phone_number = PhoneNumberField(null=True, blank=True, unique=True)
-    email = models.EmailField()
+    email = models.EmailField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
     class Meta:
         ordering = ['name']
@@ -47,6 +54,8 @@ class Business(models.Model):
     
     def __str__(self) -> str:
         return self.name
+
+
 
 
 

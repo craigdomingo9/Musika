@@ -47,9 +47,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'api.apps.ApiConfig',
+    'rest_framework.authtoken',
     'corsheaders',
+
+
+    'api',
+    'authentications',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -88,6 +98,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'musika.wsgi.application'
+
 
 
 # Database
