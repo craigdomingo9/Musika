@@ -10,7 +10,7 @@ type Props = {
 
 async function SimilarProducts({id, category} : Props) {
     
-    const url = `http://localhost:8000/api/similar-products/id=${id}&category=${category}`;
+    const url = `http://localhost:8000/api/products/similar-products/id=${id}&category=${category}`;
 
     const options: RequestInit = {
         method: "GET",

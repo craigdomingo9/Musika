@@ -10,7 +10,7 @@ type Props = {
 
 async function BusinessCatalogs({business}: Props) {
 
-    const url : string = `http://localhost:8000/api/${business}/catalogs`
+    const url : string = `http://localhost:8000/api/products/catalogs/business/${business}`
 
     const options: RequestInit = {
         method: "GET",

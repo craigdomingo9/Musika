@@ -25,8 +25,6 @@ def generate_unique_code():
 """   Business Entity   """
 class Business(models.Model):
     code = models.CharField(max_length=8,primary_key=True,default=generate_unique_code,unique=True)
-    credentials = models.OneToOneField(Credentials,on_delete=models.CASCADE,null=True,related_name="business")
-    
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     categories = models.CharField(max_length=100)

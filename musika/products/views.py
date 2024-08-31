@@ -4,12 +4,15 @@ from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics,status
-# Create your views here.
+
+
 
 # Create your views here.
 class CatalogListCreateView(generics.ListCreateAPIView):
     queryset = Catalog.objects.all()
     serializer_class = CatalogSerializer
+
+
 
 class CatalogRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Catalog.objects.all()
@@ -93,8 +96,9 @@ class ProductByCatalogListView(generics.ListAPIView):
         catalog = kwargs["catalog"]
 
         products_by_catalog = Product.objects.filter(catalog__id=catalog)
+        print(products_by_catalog,catalog)
         s_products_by_catalog = ProductsSerializer(products_by_catalog,many=True)
-
+        
         return Response(s_products_by_catalog.data)
 
 class ProductRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

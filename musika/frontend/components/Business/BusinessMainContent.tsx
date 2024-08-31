@@ -11,7 +11,7 @@ type Props = {
 
 
 async function BusinessMainContent({business,business_locations}: Props) {
-    const url = `http://localhost:8000/api/${business}/products`
+    const url = `http://localhost:8000/api/products/${business}/`
 
     const options: RequestInit = {
         method: "GET",

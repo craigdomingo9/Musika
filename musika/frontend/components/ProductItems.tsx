@@ -16,8 +16,6 @@ function ProductItems({products,row}: ProductItemsProps) {
     return text.substring(0, length) + suffix;
   };
   
-
-
   return (
     <>
       {products.map((product) => (
@@ -36,7 +34,7 @@ function ProductItems({products,row}: ProductItemsProps) {
                 {product.images && (
                   <Image 
                   className={cn("min-w-full h-full w-full rounded",!row && "max-h-full object-contain")} 
-                  src={`${base_url}${product.images[0].image}`} 
+                  src={`${base_url}${product.images.map((img) => img.image)}`} 
                   width={1000} 
                   height={1000} 
                   quality={90}

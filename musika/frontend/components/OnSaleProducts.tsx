@@ -18,6 +18,8 @@ async function OnSaleProducts() {
     const response = await fetch(url,options);
     const data = (await response.json());
 
+    // console.log(data);
+
   return (
     <div>
         <h1 className="text-xl py-2 font-semibold opacity-75 ml-4">On Sale</h1>

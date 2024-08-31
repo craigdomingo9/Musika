@@ -12,7 +12,7 @@ type Props = {
 }
 
 async function Catalog({searchParams: {id}}: Props) {
-  const url = `http://localhost:8000/api/products/catalog=${id}`
+  const url = `http://localhost:8000/api/products/catalog/${id}/`
 
   const options: RequestInit = {
       method: "GET",
@@ -26,12 +26,14 @@ async function Catalog({searchParams: {id}}: Props) {
   const response = await fetch(url,options);
   const catalog_products = (await response.json()) as Product[];
 
+  console.log(catalog_products,id)
+
   const catalog_name : string = (catalog_products.length>0 ? catalog_products[0]?.catalog?.name : "");
   const business_name : string = (catalog_products.length>0 ? catalog_products[0]?.business?.name : "");
   const business_code : string = (catalog_products.length>0 ? catalog_products[0]?.business?.code : "");
 
   return (
-    <div className='sm:mx-[15%]'>
+    <div className='sm:mx-auto sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem]'>
       <CatalogHeader catalog_name={catalog_name} />
         <Link href={business_code} className='text-lg font-bold mx-2 mt-4 flex'>
           {catalog_name} by&nbsp;<Button variant={"link"} className='text-blue-300 font-bold text-lg h-0 p-0 my-auto'>{business_name}</Button>

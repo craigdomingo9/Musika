@@ -18,7 +18,7 @@ type Images = {
 
 
 async function ProductDetailsMain({id}: Props) {
-    const url = `http://localhost:8000/api/product/${id}/`;
+    const url = `http://localhost:8000/api/products/${id}/`;
 
     const options: RequestInit = {
         method: "GET",
@@ -32,6 +32,8 @@ async function ProductDetailsMain({id}: Props) {
 
     const response = await fetch(url,options);
     const data = (await response.json());
+
+
 
     const images: Images[] = [data["images"][0] as Images,...data["variant"]];
 

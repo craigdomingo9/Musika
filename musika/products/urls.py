@@ -17,7 +17,7 @@ urlpatterns = [
 
     path("catalogs/",CatalogListCreateView.as_view()),
     path("catalogs/<int:pk>/",CatalogRetrieveUpdateDestroyView.as_view()),
-    path("catalogs/<str:code>/", BusinessesCatalogsRetrieveView.as_view()),
-    path("catalogs/<str:catalog>/",ProductByCatalogListView.as_view()),
+    path("catalogs/business/<str:code>/", BusinessesCatalogsRetrieveView.as_view()),
+    path("catalog/<int:catalog>/",ProductByCatalogListView.as_view()),
 ]
 

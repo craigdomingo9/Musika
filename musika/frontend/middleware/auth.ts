@@ -22,7 +22,7 @@ export const verifyToken = async (router: AppRouterInstance) => {
         const details = response;
 
         if(response.account_type == "business"){
-            router.push(`/business/${details.code}/admin/`)
+            router.push(`/${details.code}/admin/`)
         }
 
         

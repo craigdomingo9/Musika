@@ -7,7 +7,7 @@ type Props = {
 
 
 async function Categories({name}: Props) {
-    const url = "http://localhost:8000/api/categories/";
+    const url = "http://localhost:8000/api/category/";
 
     const options: RequestInit = {
         method: "GET",

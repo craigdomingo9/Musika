@@ -6,17 +6,27 @@ from .models import Credentials,Token
 from .serializers import SignUpSerializer,TokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny,IsAuthenticated
+from business.models import Business
+from rest_framework import generics
 
 
-
-
-class SignUpView(APIView):
+class SignUpView(generics.CreateAPIView):
     def post(self, request):
-        serializer = SignUpSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"detail": "User registered successfully."}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        data = {
+            "email": request.data["email"],
+            "password": request.data["password"]
+        }
+        
+        if request.data['password'] != request.data['confirm_password']:
+            return Response({"detail": "Passwords do not match."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if Credentials.objects.filter(email=data["email"]).exists():
+            return Response({"detail": "User already exists."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        Credentials.objects.create(email=data["email"],password=data["password"])
+        
+        return Response({"detail": "User registered successfully."}, status=status.HTTP_201_CREATED)
+        
 
 
 
@@ -28,7 +38,7 @@ class VerifyTokenView(APIView):
 
         user = request.user.email
         account_type = Credentials.objects.get(email=user).account_type
-        
+
         code = ""
         if account_type == "business":
             code = Business.objects.get(email=user).code
@@ -47,7 +57,8 @@ class LoginView(ObtainAuthToken):
         
         try:
             user = Credentials.objects.get(email=email)
-            if user.check_password(password):
+            
+            if user.password==password:
                 key,_ = Token.objects.get_or_create(user=user)
                 return Response(TokenSerializer(key).data, status=status.HTTP_200_OK)
             else:

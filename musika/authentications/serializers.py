@@ -20,9 +20,9 @@ class SignUpSerializer(serializers.ModelSerializer):
         model = Credentials
         fields = ['email', 'password', 'confirm_password']
 
-    def validate(self, attrs):
-        if attrs['password'] != attrs['confirm_password']:
-            raise serializers.ValidationError("Passwords do not match.")
+    def is_valid(self, attrs):
+        print("hello")
+        
         return attrs
 
     def create(self, validated_data):
