@@ -4,6 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Credentials,Token
 from .serializers import SignUpSerializer,TokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.permissions import AllowAny,IsAuthenticated
+from api.models import Business
 
 
 
@@ -18,7 +21,25 @@ class SignUpView(APIView):
 
 
 
-class LoginView(APIView):
+class VerifyTokenView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # The token is automatically verified by DRF's authentication system
+
+        user = request.user.email
+        account_type = Credentials.objects.get(email=user).account_type
+        
+        code = ""
+        if account_type == "business":
+            code = Business.objects.get(email=user).code
+        
+        return Response({"code": code})
+
+
+class LoginView(ObtainAuthToken):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
@@ -26,8 +47,7 @@ class LoginView(APIView):
         try:
             user = Credentials.objects.get(email=email)
             if user.check_password(password):
-                key,created = Token.objects.get_or_create(user=user)
-                print(created)
+                key,_ = Token.objects.get_or_create(user=user)
                 return Response(TokenSerializer(key).data, status=status.HTTP_200_OK)
             else:
                 return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -37,6 +57,8 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         token_key = request.data.get('token')
         try:

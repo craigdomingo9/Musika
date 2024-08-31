@@ -1,12 +1,13 @@
-import BusinessLoginForm from "@/components/Credentials/BusinessLoginForm"
-import CredentialsHeader from "@/components/Credentials/CredentialsHeader"
+import CredentialsHeader from "@/components/Credentials/CredentialsHeader";
+import LoginForm from "@/components/Credentials/LoginForm";
+
 
 function BusinessLogin() {
   return (
     <div>
         <CredentialsHeader page={"Login"} />
         <div>
-            <BusinessLoginForm />
+            <LoginForm />
         </div>
     </div>
   )

@@ -11,6 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
+    "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
@@ -20,11 +22,13 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.1.8",
     "immer": "^10.1.1",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.428.0",
     "next": "14.2.5",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.53.0",
     "react-router-dom": "^6.26.1",
     "shadcn-ui": "^0.8.0",
     "sharp": "^0.33.5",
@@ -35,6 +39,7 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

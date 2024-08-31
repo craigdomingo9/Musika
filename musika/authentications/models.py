@@ -7,6 +7,11 @@ import uuid
 
 class Credentials(AbstractBaseUser):
     email = models.EmailField(unique=True)
+    account_type = models.CharField(max_length=20,default="basic", choices=[
+        ('basic', 'basic'),
+        ('business', 'Business'),
+    ])
+    
 
     USERNAME_FIELD = 'email'
 

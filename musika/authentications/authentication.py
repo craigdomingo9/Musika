@@ -1,15 +1,27 @@
-from rest_framework.authentication import BaseAuthentication
+from rest_framework.authentication import BaseAuthentication,TokenAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.authtoken.models import Token
+from .models import Token
 
-class TokenAuthentication(BaseAuthentication):
+class CustomBearerTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
-        token_key = request.META.get('HTTP_AUTHORIZATION')
-        if not token_key:
-            return None
-        
+        # Get the Authorization header
+        auth_header = request.META.get('HTTP_AUTHORIZATION')
+
+        if not auth_header:
+            return None  # No Authorization header, skip authentication
+
+        # Check if the header starts with "Bearer "
+        if not auth_header.startswith('Bearer '):
+            raise AuthenticationFailed('Authorization header must start with Bearer')
+
+        # Extract the token
+        token = auth_header.split(' ')[1]
+
         try:
-            token = Token.objects.get(key=token_key)
-            return (token.user, token)
+            # Validate the token and retrieve the user
+            token_obj = Token.objects.get(key=token)
+            user = token_obj.user
         except Token.DoesNotExist:
             raise AuthenticationFailed('Invalid token')
+
+        return (user, token_obj)

@@ -11,6 +11,7 @@ class TokenSerializer(serializers.ModelSerializer):
         fields = ["key"]
 
 
+
 class SignUpSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     confirm_password = serializers.CharField(write_only=True)
