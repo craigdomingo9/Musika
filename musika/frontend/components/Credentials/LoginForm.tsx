@@ -74,11 +74,7 @@ function LoginForm() {
                 duration: 1500,
             })
 
-            verifyToken();
-
-            const code = Cookies.get('code');
-            router.push(`/business/${code}/admin/`)
-
+            verifyToken(router);
             // Save the token or redirect user as needed
         } catch (error: any) {
             console.error('Error:', error.message);

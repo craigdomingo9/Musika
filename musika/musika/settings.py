@@ -47,18 +47,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
 
 
     'api',
     'authentications',
+    'business',
+    "category",
+    "products",
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
         'authentications.authentication.CustomBearerTokenAuthentication',
     ],
 }

@@ -1,8 +1,9 @@
 "use client";
 import Cookies from 'js-cookie';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 
-export const verifyToken = async () => {
+export const verifyToken = async (router: AppRouterInstance) => {
     const token = Cookies.get('token');
 
     if (!token) {
@@ -20,7 +21,11 @@ export const verifyToken = async () => {
 
         const details = response;
 
-        Cookies.set('code', details.code);
+        if(response.account_type == "business"){
+            router.push(`/business/${details.code}/admin/`)
+        }
+
+        
 
         return true;
     } catch (error) {

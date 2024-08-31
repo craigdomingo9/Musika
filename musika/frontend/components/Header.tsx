@@ -1,5 +1,8 @@
-import Link from "next/link"
-import { Button } from "./ui/button"
+"use client";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { verifyToken } from "@/middleware/auth";
+import { useRouter } from "next/navigation";
 
 function Header() {
   return (

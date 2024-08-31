@@ -6,7 +6,6 @@ from .models import Credentials,Token
 from .serializers import SignUpSerializer,TokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny,IsAuthenticated
-from api.models import Business
 
 
 
@@ -33,8 +32,10 @@ class VerifyTokenView(APIView):
         code = ""
         if account_type == "business":
             code = Business.objects.get(email=user).code
+
+        data = {"code": code,"account_type": account_type}
         
-        return Response({"code": code})
+        return Response(data)
 
 
 class LoginView(ObtainAuthToken):
