@@ -51,13 +51,13 @@ class Business(models.Model):
 
 
 class Location(models.Model):
-    business = models.ForeignKey(Business,on_delete=models.DO_NOTHING,related_name="location")
+    business = models.ForeignKey(Business,on_delete=models.CASCADE,related_name="location")
     name = models.CharField(max_length=50,blank=False,default="")
     address = models.CharField(max_length=255)
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
     city = models.CharField(max_length=30)
-    country = models.CharField(default="Zimbabwe",max_length=30)
+    country = models.CharField(default="Zimbabwe",max_length=30,blank=True)
 
     def __str__(self) -> str:
         return f"{self.address}, {self.city}"
@@ -65,7 +65,7 @@ class Location(models.Model):
 
 
 class Subscription(models.Model):
-    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE,related_name="subscriptions")
     plan = models.ForeignKey("SubscriptionPlan", on_delete=models.CASCADE, related_name='subscriptions')
     interval = models.CharField(max_length=20, choices=[
         ('monthly', 'Monthly'),

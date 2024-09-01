@@ -13,7 +13,7 @@ type Props = {
     setValue: UseFormSetValue<
     { 
         name: string;
-        logo: string; 
+        logo: File; 
         description: string; 
         categories: string; 
         phone_number: string; 

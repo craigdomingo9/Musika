@@ -7,14 +7,18 @@ from rest_framework.views import APIView
 # Create your views here.
 class BusinessesListCreateView(generics.ListCreateAPIView):
     queryset = Business.objects.all()
-    serializer_class = BusinessSerializer
+    serializer_class = BusinessCreateSerializer
 
-class BusinessesCreateView(APIView):
+
+
+class BusinessCreateView(APIView):
     serializer_class = BusinessCreateSerializer
 
     def post(self,request):
         serializer = self.serializer_class(data=request.data)
         data = request.data
+
+        print(data)
 
         if serializer.is_valid():
             business = Business.objects.create(
@@ -53,6 +57,31 @@ class SubscriptionsRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIVi
 class LocationListCreateView(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
+class LocationCreateView(APIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationCreateSerializer
+
+    def post(self,request,**kwargs):
+
+        data = request.data
+
+        code = kwargs["code"]
+        business = Business.objects.filter(code=code).first()
+        print(business)
+
+        data["business"] = business.pk
+
+        serializer = self.serializer_class(data=request.data)
+
+        print(data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({"detail":"Location was set up successfully."},status=status.HTTP_201_CREATED)
+        return Response({"detail": "Location set up failed."},status=status.HTTP_400_BAD_REQUEST)
+
 
 class LocationRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Location.objects.all()

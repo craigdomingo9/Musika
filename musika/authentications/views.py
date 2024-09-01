@@ -11,7 +11,7 @@ from rest_framework import generics
 
 
 class SignUpView(generics.CreateAPIView):
-    def post(self, request):
+    def post(self, request,**kwargs):
         data = {
             "email": request.data["email"],
             "password": request.data["password"]
@@ -23,7 +23,10 @@ class SignUpView(generics.CreateAPIView):
         if Credentials.objects.filter(email=data["email"]).exists():
             return Response({"detail": "User already exists."}, status=status.HTTP_400_BAD_REQUEST)
         
-        Credentials.objects.create(email=data["email"],password=data["password"])
+        if kwargs["is_business"] == 1:
+            Credentials.objects.create(email=data["email"],password=data["password"],account_type="business")
+        else:
+            Credentials.objects.create(email=data["email"],password=data["password"])
         
         return Response({"detail": "User registered successfully."}, status=status.HTTP_201_CREATED)
         

@@ -16,8 +16,10 @@ class BusinessCreateSerializer(serializers.ModelSerializer):
         fields = ["name","description","categories","logo","phone_number","email"]
     
     def is_valid(self):
-        data_keys = list(dict(self.initial_data).keys())
-        fields_keys = list(dict(self.fields).keys())
+        data_keys = sorted(list(dict(self.initial_data).keys()))
+        fields_keys = sorted(list(dict(self.fields).keys()))
+
+        print("\n",data_keys,"\n",fields_keys)
 
         if data_keys == fields_keys:
             return True
@@ -35,4 +37,10 @@ class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ('id','name', 'address', 'latitude', 'longitude','city','country')
+
+class LocationCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Location
+        fields = ('business','name', 'address', 'city')
 
