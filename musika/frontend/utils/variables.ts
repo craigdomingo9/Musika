@@ -1,6 +1,6 @@
 const variables = {
     caching: {
-        categories: 1,
+        categories: 60,
         products: 1,
         product_details: 1,
         business: 1,

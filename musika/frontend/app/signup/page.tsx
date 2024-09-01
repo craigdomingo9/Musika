@@ -1,12 +1,20 @@
 import CredentialsHeader from '@/components/Credentials/CredentialsHeader'
 import SignUpForm from '@/components/Credentials/SignUpForm'
-import React from 'react'
 
-function BusinessSignup() {
+
+
+type Props = {
+  searchParams: {
+    step: number;
+  }
+}
+
+
+function BusinessSignup({searchParams: {step}}: Props) {
   return (
     <div className='grid'>
         <CredentialsHeader page={"Signup"} />
-        <SignUpForm />
+        <SignUpForm step={step} />
 
     </div>
   )

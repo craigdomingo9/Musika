@@ -1,10 +1,10 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import BusinessSignupForm from "./BusinessSignUpForm"
-import CustomerSignUpForm from "./CustomerSignUpForm"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import BusinessSignupForm from "./BusinessSignUpForm";
+import CustomerSignUpForm from "./CustomerSignUpForm";
 
 
 
-function SignUpForm() {
+function SignUpForm({step}: {step: number}) {
   return (
     <div className="flex justify-center">
       <Tabs className="w-[95%] sm:w-[30rem]  grid items-center" defaultValue="business">
@@ -14,11 +14,10 @@ function SignUpForm() {
             <TabsTrigger value="business">Business</TabsTrigger>
         </TabsList>
         <TabsContent value="customer">
-          <p className="text-center font-semibold">Customer Account</p>
           <CustomerSignUpForm />
         </TabsContent>
         <TabsContent value="business">
-          <BusinessSignupForm />
+          <BusinessSignupForm step={step} />
         </TabsContent>
       </Tabs>
     </div>

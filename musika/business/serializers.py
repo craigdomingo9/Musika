@@ -8,6 +8,22 @@ class BusinessSerializer(serializers.ModelSerializer):
         fields = ["code","name","description","catalog","categories","logo","cover_photo","products","phone_number","email","created_at","location"]
         depth = 1
 
+
+class BusinessCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Business
+        fields = ["name","description","categories","logo","phone_number","email"]
+    
+    def is_valid(self):
+        data_keys = list(dict(self.initial_data).keys())
+        fields_keys = list(dict(self.fields).keys())
+
+        if data_keys == fields_keys:
+            return True
+        else:
+            return False
+
 class SubscriptionsSerializer(serializers.ModelSerializer):
 
     class Meta:

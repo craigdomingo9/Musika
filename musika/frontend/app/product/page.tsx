@@ -3,11 +3,11 @@ import ProductDetailsMain from "@/components/ProductDetails/ProductDetailsMain"
 
 
 type Props = {
-    searchParams: {
-        id: number,
-        onsale: boolean,
-        category: string,
-    }
+  searchParams: {
+    id: number,
+    onsale: boolean,
+    category: string,
+  }
 }
 
 
