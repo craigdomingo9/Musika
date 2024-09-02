@@ -103,3 +103,8 @@ html,div,* {
   cursor: pointer;
   transition: background .2s ease-in-out;
 }
+
+
+html, div {
+  font-family: url("./fonts/static/SUSE-Medium.ttf");
+}
