@@ -15,7 +15,7 @@ function CheckoutButton() {
 
   return (
     <div className="p-2 z-50 grid fixed w-[96.5vw] sm:w-[10vw] sm:right-32 h-[10vh] bottom-14">
-        <Button className="w-full h-full bg-color-btn text-lg">Checkout ${Price}</Button>
+        <Button disabled className="w-full h-full bg-color-btn text-lg">Checkout ${Price}</Button>
     </div>
   )
 }

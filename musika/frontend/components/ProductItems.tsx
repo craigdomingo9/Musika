@@ -30,7 +30,7 @@ function ProductItems({products,row,page}: ProductItemsProps) {
           
             <div className={cn("grid w-40 sm:w-full mx-4 bg-opacity-70 h-40",
                             row && "h-36 w-36 sm:ml-0 sm:w-60 sm:h-60",
-                            !row && "sm:overflow-hidden sm:w-[20rem] xl:w-[17rem] sm:border-2 sm:object-cover sm:h-[20rem] xl:h-[17rem] sm:grid ",
+                            !row && "sm:overflow-hidden sm:w-[18rem] xl:w-[17rem] sm:border-2 sm:object-cover sm:h-[18rem] xl:h-[17rem] sm:grid ",
                             page=="catalog" && "sm:w-[18rem] sm:flex lg:w-[19rem] xl:w-[22rem] xl:h-[22rem]",
                             page=="business" && "sm:w-[12rem] sm:h-[12rem] md:w-[14rem] md:h-[14rem] lg:w-[19rem] lg:h-[19rem] xl:w-[22rem] xl:h-[22rem]")}>
               <div className={cn("",!row && "sm:grid w-full")}>
@@ -46,7 +46,7 @@ function ProductItems({products,row,page}: ProductItemsProps) {
               </div>
             </div>
             <div className={cn("mx-3 sm:ml-0 pt-1 border-t border-dashed",
-              !row && "h-28 w-36 mx-5 sm:mx-5 sm:w-full",
+              !row && "h-28 w-36 mx-5 sm:mx-5 sm:w-[18rem] xl:w-[17rem]",
               page=="catalog" && "sm:w-[18rem] lg:w-[19rem] xl:w-[22rem]",
               page=="business" && "sm:w-[12rem] md:w-[14rem] lg:w-[19rem] xl:w-[22rem] ")}>
                 <p className="text-sm font-bold">{truncate(product.name,30)}</p>
