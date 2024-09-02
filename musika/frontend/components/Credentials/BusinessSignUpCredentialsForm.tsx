@@ -53,7 +53,7 @@ function BusinessSignUpCredentialsForm() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         
         try {
-            const url = "http://localhost:8000/auth/signup/is_business=1/";
+            const url = "http://localhost:8000/auth/signup/is_business=1";
             const options: RequestInit = {
                 method: "POST",
                 headers: {

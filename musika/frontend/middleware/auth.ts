@@ -22,7 +22,13 @@ export const verifyToken = async (router: AppRouterInstance) => {
         const details = response;
 
         if(response.account_type == "business"){
-            router.push(`/${details.code}/admin/`)
+            Cookies.remove("location_is_setup");
+            router.push(`/b/${details.code}/admin/`);
+        }else{
+            Cookies.remove("business_code");
+            Cookies.remove("business_email");
+            Cookies.remove("location_is_setup");
+            router.push(`/`);
         }
 
         

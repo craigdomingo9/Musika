@@ -33,8 +33,8 @@ async function BusinessMainContent({business,business_locations}: Props) {
                 <TabsTrigger value="catalogs">Catalogs</TabsTrigger>
                 <TabsTrigger value="location">Location</TabsTrigger>
             </TabsList>
-            <TabsContent value="products" className="grid grid-cols-2 min-w-full">
-                <ProductItems products={business_products} row={false} />
+            <TabsContent value="products" className="grid place-items-center grid-cols-2 min-w-full">
+                <ProductItems products={business_products} row={false} page="business" />
             </TabsContent>
             <TabsContent value="catalogs">
                 <BusinessCatalogs business={business} />

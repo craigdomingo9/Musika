@@ -24,7 +24,7 @@ async function OnSaleProducts() {
     <div>
         <h1 className="text-xl py-2 font-semibold opacity-75 ml-4">On Sale</h1>
         <div className="flex w-full overflow-y-hidden">
-            <ProductItems products={data} row={true} />
+            <ProductItems products={data} row={true} page="home" />
         </div>
     </div>
   )

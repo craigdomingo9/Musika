@@ -33,14 +33,14 @@ async function Catalog({searchParams: {id}}: Props) {
   const business_code : string = (catalog_products.length>0 ? catalog_products[0]?.business?.code : "");
 
   return (
-    <div className='sm:mx-auto sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem]'>
+    <div className='sm:w-[40rem] xl:w-[47rem] sm:mx-auto'>
       <CatalogHeader catalog_name={catalog_name} />
-        <Link href={business_code} className='text-lg font-bold mx-2 mt-4 flex'>
+        <Link href={`/b/${business_code}`} className='text-lg font-bold mx-2 mt-4 flex'>
           {catalog_name} by&nbsp;<Button variant={"link"} className='text-blue-300 font-bold text-lg h-0 p-0 my-auto'>{business_name}</Button>
         </Link>
         <p>{}</p>
-      <div className='grid grid-cols-2 mt-4 sm:grid-cols-3'>
-        <ProductItems products={catalog_products} row={false} />
+      <div className='grid w-full place-items-center grid-cols-2 mt-4'>
+        <ProductItems products={catalog_products} row={false} page="catalog" />
       </div>
     </div>
   )

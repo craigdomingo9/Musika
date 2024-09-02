@@ -89,7 +89,7 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
             </div>
           )}
 
-          <Link href={`${business_details.code}`}>
+          <Link href={`/b/${business_details.code}`}>
             <div className="w-full flex px-2 py-5 justify-between">
               <div className="flex">
                 {business_details?.logo ? (

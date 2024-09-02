@@ -3,6 +3,15 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.db import models
 import uuid
 
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and return a user with an email, password, and other fields."""
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = self.model(email=email, password=password, **extra_fields)
+        user.save(using=self._db)
+        return user
 
 
 class Credentials(AbstractBaseUser):
@@ -11,6 +20,8 @@ class Credentials(AbstractBaseUser):
         ('basic', 'basic'),
         ('business', 'Business'),
     ])
+
+    objects = CustomUserManager()
     
 
     USERNAME_FIELD = 'email'

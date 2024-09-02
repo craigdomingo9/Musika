@@ -6,6 +6,7 @@ from .models import Credentials,Token
 from .serializers import SignUpSerializer,TokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny,IsAuthenticated
+from django.contrib.auth.hashers import make_password
 from business.models import Business
 from rest_framework import generics
 
@@ -24,9 +25,9 @@ class SignUpView(generics.CreateAPIView):
             return Response({"detail": "User already exists."}, status=status.HTTP_400_BAD_REQUEST)
         
         if kwargs["is_business"] == 1:
-            Credentials.objects.create(email=data["email"],password=data["password"],account_type="business")
+            Credentials.objects.create(email=data["email"],password=make_password(data["password"]),account_type="business")
         else:
-            Credentials.objects.create(email=data["email"],password=data["password"])
+            Credentials.objects.create(email=data["email"],password=make_password(data["password"]))
         
         return Response({"detail": "User registered successfully."}, status=status.HTTP_201_CREATED)
         
@@ -61,7 +62,7 @@ class LoginView(ObtainAuthToken):
         try:
             user = Credentials.objects.get(email=email)
             
-            if user.password==password:
+            if user.check_password(password):
                 key,_ = Token.objects.get_or_create(user=user)
                 return Response(TokenSerializer(key).data, status=status.HTTP_200_OK)
             else:
