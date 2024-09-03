@@ -113,3 +113,17 @@ type CurrentProduct = {
     price: number;
     quantity: number;
 }
+
+
+type Profile = {
+    address: string,
+    city: string,
+    country: string,
+    credentials: string,
+    date_of_birth: null | string,
+    first_name: string,
+    last_name: string,
+    phone_number: string,
+    profile_picture: string,
+  }
+  

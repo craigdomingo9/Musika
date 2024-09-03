@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'business',
     "category",
     "products",
+    "profiles"
 ]
 
 REST_FRAMEWORK = {

@@ -65,6 +65,7 @@ function LoginForm() {
             const responseData = await response.json();
 
             Cookies.set('token', responseData.key, { expires: 7 });
+            Cookies.set('email', responseData.email, { expires: 7 });
 
             toast({
                 variant: "green",

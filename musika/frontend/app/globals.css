@@ -106,5 +106,6 @@ html,div,* {
 
 
 html, div {
-  font-family: url("./fonts/static/SUSE-Medium.ttf");
+  font-family: "";
+  /* src: url("./fonts/static/SUSE-Medium.ttf"); */
 }

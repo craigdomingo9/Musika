@@ -15,7 +15,7 @@ class CustomUserManager(BaseUserManager):
 
 
 class Credentials(AbstractBaseUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,primary_key=True)
     account_type = models.CharField(max_length=20,default="basic", choices=[
         ('basic', 'basic'),
         ('business', 'Business'),

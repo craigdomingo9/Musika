@@ -6,6 +6,7 @@ const variables = {
         business: 1,
         catalogs: 1,
         bag: 1,
+        profile: 1,
     }
 }
 

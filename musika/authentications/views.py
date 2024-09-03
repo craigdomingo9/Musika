@@ -64,7 +64,7 @@ class LoginView(ObtainAuthToken):
             
             if user.check_password(password):
                 key,_ = Token.objects.get_or_create(user=user)
-                return Response(TokenSerializer(key).data, status=status.HTTP_200_OK)
+                return Response({'key':TokenSerializer(key).data,'email':email}, status=status.HTTP_200_OK)
             else:
                 return Response({'detail': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
         except Credentials.DoesNotExist:
