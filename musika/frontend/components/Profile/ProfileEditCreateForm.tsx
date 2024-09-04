@@ -18,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { cities } from "@/utils/extras";
+import { toast } from "../ui/use-toast";
 
 
 type Props = {
@@ -33,7 +34,7 @@ const profileEditCreateFormSchema = z.object({
     .min(10, { message: 'Phone number must be at least 10 digits' })
     .max(15, { message: 'Phone number must be at most 15 digits' })
     .regex(/^\d+$/, { message: 'Phone number must only contain digits' }),
-    profile_picture: z.instanceof(File).optional(),
+    profile_picture: z.instanceof(File),
     address: z.string().min(2).max(100),
     city: z.string(),
 })
@@ -41,31 +42,55 @@ const profileEditCreateFormSchema = z.object({
 
 function ProfileEditCreateForm({profile,editProfile}: Props) {
 
-
-    const [email, setEmail] = useState<string | undefined>(" ")
+    const router = useRouter();
+    const [token, setToken] = useState<string | undefined>(" ")
+    const [email, setEmail] = useState<string | undefined>(" ");
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    // console.log(profile)
     
+
+    const form = useForm<z.infer<typeof profileEditCreateFormSchema>>({
+        resolver: zodResolver(profileEditCreateFormSchema),
+        defaultValues: {
+            first_name: profile ? profile.first_name : "",
+            last_name: profile ? profile.last_name : "",
+            phone_number: profile ? profile.phone_number : "",
+            address: profile ? profile.address : "",
+            city: profile ? profile.city : "",
+        },
+    })
+
+    async function setImageDefaultfn(imageUrl: string){
+        const response = await fetch(imageUrl);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const blob = await response.blob();
+        const blob_ext = blob.type.split("/")[1]
+        const file = new File([blob], `profile_picture.${blob_ext}`, { type: blob.type });
+
+        return file;
+    }
+
 
     useEffect(() => {
         
         const _email = Cookies.get("email");
         setEmail(_email);
+        const _token = Cookies.get("token");
+        setToken(_token);
+        
         if (profile){
-            setImagePreview(profile.profile_picture)
+            setImagePreview(profile.profile_picture);
+            setImageDefaultfn(profile.profile_picture)
+            .then(file => {
+                if (file) {
+                    form.setValue("profile_picture",file);
+                    // console.log(file)
+                }
+            })
         }
     },[])
-
-    const form = useForm<z.infer<typeof profileEditCreateFormSchema>>({
-        resolver: zodResolver(profileEditCreateFormSchema),
-        defaultValues: {
-            first_name: profile ? profile.first_name : "Brandon",
-            last_name: profile ? profile.last_name : "William",
-            phone_number: profile ? profile.phone_number : "263776808964",
-            address: profile ? profile.address : "5007 Kuwadzana",
-            city: profile ? profile.city : "Harare",
-        },
-    })
 
 
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,9 +103,55 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
         }
     };
 
+    async function editCreatefn(url: string, data: FormData, edit: boolean,){
+        const response = await fetch(url, {
+            method: edit ? "PUT": "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+            body: data,
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            toast({
+                variant: "destructive",
+                description: errorData.detail,
+                duration: 1500,
+            })
+        }
+
+        const responseData = await response.json();
+        
+        if(response.ok){
+            toast({
+                variant: "green",
+                description: responseData.detail,
+                duration: 3000,
+            });
+            router.refresh();
+        }
+    }
+
     async function onSubmit(data: z.infer<typeof profileEditCreateFormSchema>) {
-        console.log("------------")
-        console.log(data)
+        const formData = new FormData();
+        formData.append('first_name', data.first_name);
+        formData.append('last_name',data.last_name);
+        formData.append('profile_picture',data.profile_picture);
+        formData.append('phone_number',data.phone_number);
+        formData.append('address',data.address);
+        formData.append('city',data.city);
+        formData.append(editProfile ? 'credentials':'email',email ? email : "");
+
+        
+        const url = 
+            editProfile ? 
+                "http://localhost:8000/api/profiles/edit"
+                : 
+                "http://localhost:8000/api/profiles/create";
+        
+        editCreatefn(url,formData,editProfile);
+        
     }
 
 
@@ -124,6 +195,7 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
                                     height={1000}
                                     width={1000}
                                     className="mt-4 border rounded-full mx-auto w-80 h-80 object-cover"
+                                    priority
                                     />
                                 )}
                             </div>
@@ -179,11 +251,11 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
                     name="address"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Address</FormLabel>
-                        <FormControl>
-                            <Input className="text-sm" placeholder="56785 Warren Park" {...field} />
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>Address</FormLabel>
+                                <FormControl>
+                                    <Input className="text-sm" placeholder="56785 Warren Park" {...field} />
+                                </FormControl>
+                                <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -192,22 +264,25 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
                     name="city"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>City</FormLabel>
-                        <FormControl>
-                        <Select defaultValue={field.value}>
-                                <FormControl>
-                                <SelectTrigger>
-                                    <SelectValue placeholder={profile ? profile.city : "Choose your city"} />
-                                </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                {cities.map((city) => (
-                                    <SelectItem key={city} defaultValue={profile ? profile.city : ""} value={city}>{city}</SelectItem>
-                                ))}
-                                </SelectContent>
-                            </Select>
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>City</FormLabel>
+                            <FormControl>
+                                <Select onValueChange={(value) => {
+                                    field.onChange;
+                                    form.setValue("city",value);
+                                }}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder={profile ? profile.city : "Choose your city"} />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {cities.map((city) => (
+                                            <SelectItem key={city} value={city}>{city}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />

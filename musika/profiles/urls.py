@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import ProfileCreateView,ProfileRetriveUpdateView
+from .views import *
 
 urlpatterns = [
-    path("",ProfileCreateView.as_view()),
-    path("<str:pk>",ProfileRetriveUpdateView.as_view()),
+    path("",ProfileListView.as_view()),
+    path("create",ProfileCreateView.as_view()),
+    path("edit",ProfileUpdateView.as_view()),
+    path("<str:pk>",ProfileRetrieveView.as_view()),
 ]
 

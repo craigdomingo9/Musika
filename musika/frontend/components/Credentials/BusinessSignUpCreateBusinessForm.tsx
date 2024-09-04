@@ -90,7 +90,7 @@ function BusinessSignUpCreateBusinessForm() {
                     description: errorData.detail,
                     duration: 1500,
                 })
-                throw new Error(errorData.detail || 'Login failed');
+                throw new Error(errorData.detail || 'Signup failed');
             }
 
             const responseData = await response.json();

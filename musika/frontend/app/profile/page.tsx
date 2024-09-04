@@ -8,12 +8,21 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-function Profile() {
+
+type Props = {
+  searchParams: {
+    edit: number | undefined;
+  }
+}
+
+function Profile({searchParams: {edit}}: Props) {
 
   const [editProfile, setEditProfile] = useState<boolean>(false)
 
   const router = useRouter();
   const [token, setToken] = useState<string | undefined>(" ")
+
+ 
 
     useEffect(() => {
         const _token = Cookies.get("token");
@@ -22,7 +31,24 @@ function Profile() {
         if (!token) {
             router.push("/login")
         }
+
+        
+
+        if (edit) {
+          setEditProfile(true)
+        }
+
+
     },[])
+
+    function editProfilefn(){
+      setEditProfile(!editProfile)
+      if (!editProfile) {
+          router.push("/profile?edit=1")
+      }else{
+          router.push("/profile")
+      }
+    }
 
     
   return (
@@ -31,7 +57,7 @@ function Profile() {
       <ProfileHeader />
 
       <div className="flex justify-center pt-2 [&>Button]:w-[95%] sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem] sm:mx-auto">
-        <Button variant="outline" className="text-start " onClick={() => setEditProfile(!editProfile)}>
+        <Button variant="outline" className="text-start " onClick={() => editProfilefn()}>
             <p>Edit Profile</p>
             {editProfile ? (
                 <ChevronDown className="h-4 w-4" />

@@ -29,7 +29,6 @@ function ProfileEditCreateFormRenderer() {
 
             if (response.ok && !profile){
                 setProfile(_profile);
-                console.log("set");
             }
 
             if (!response.ok) {
