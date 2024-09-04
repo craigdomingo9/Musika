@@ -25,17 +25,15 @@ function ProfileContent({profile}: Props) {
         if (!token) {
             router.push("/login")
         }
-
     })
 
 
   return (
-    <div className="mx-4">
-        <p className="text-center font-bold">Profile</p>
-        <p className="text-center font-bold text-sm">{email}</p>
+    <div className="px-4 pt-4">
+        
         {token && (
             <div className="flex flex-col justify-center">
-                <div className="mt-5 grid">
+                <div className="py-2 grid">
                     {profile?.profile_picture ? (
                         <Image
                         className="rounded-full w-80 h-80 object-cover mx-auto"
@@ -53,6 +51,7 @@ function ProfileContent({profile}: Props) {
                         </div>
                     )}
                 </div>
+                <p className="text-center font-bold text-sm">{email}</p>
                 <div className="flex flex-col justify-center pt-4"> 
                     <div className="text-lg text-center [&>p>span]:font-bold [&>p>span]:text-xl">
                         <p>First Name: <span>{profile?.first_name ? profile?.first_name : "Not Set"}</span></p>
@@ -62,12 +61,14 @@ function ProfileContent({profile}: Props) {
                         <p>Date of Birth: <span>{profile?.date_of_birth ? profile?.date_of_birth :"Not Set"}</span></p>
                     </div>
                 </div>
-                <Button className="py-8 text-md bg-amber-600 opacity-90 mt-5">
-                    Edit Profile &nbsp;&nbsp;
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                    </svg>
-                </Button>
+                <div className="flex justify-center">
+                    <Button className="py-8 w-[30rem] text-md bg-amber-600 opacity-90 mt-5">
+                        Edit Profile &nbsp;&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                        </svg>
+                    </Button>
+                </div>
             </div>
         )}
     </div>
@@ -75,3 +76,4 @@ function ProfileContent({profile}: Props) {
 }
 
 export default ProfileContent
+

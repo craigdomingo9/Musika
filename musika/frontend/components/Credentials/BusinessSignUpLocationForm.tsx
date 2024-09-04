@@ -22,6 +22,7 @@ import Cookies from 'js-cookie';
 import { Input } from "@/components/ui/input"
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { cities } from "@/utils/extras";
 
 
 const BusinessLocationFormSchema = z.object({
@@ -30,21 +31,6 @@ const BusinessLocationFormSchema = z.object({
   city: z.string().min(3),
 })
 
-const cities: string[] = [
-  "Harare",
-  "Bulawayo",
-  "Gweru",
-  "Mutare",
-  "Kwekwe",
-  "Marondera",
-  "Masvingo",
-  "Chegutu",
-  "Bindura",
-  "Victoria Falls",
-  "Kariba",
-  "Nyanga",
-  "Chinhoyi",
-]
 
 
 function BusinessSignUpLocationForm() {

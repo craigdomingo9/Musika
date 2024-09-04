@@ -126,4 +126,3 @@ type Profile = {
     phone_number: string,
     profile_picture: string,
   }
-  

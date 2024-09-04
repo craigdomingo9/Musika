@@ -84,7 +84,7 @@ html,div,* {
 }
 
 .file-input {
-  width: 350px;
+  width: 340px;
   max-width: 100%;
   color: #444;
   padding: 2px;
@@ -96,16 +96,13 @@ html,div,* {
 .file-input::file-selector-button {
   margin-right: 20px;
   border: none;
-  background: #084cdf;
+  /* background: #084cdf; */
   padding: 10px 20px;
   border-radius: 10px;
   color: #fff;
   cursor: pointer;
   transition: background .2s ease-in-out;
 }
-
-
-html, div {
-  font-family: "";
-  /* src: url("./fonts/static/SUSE-Medium.ttf"); */
+.file-input::file-selector-button {
+  @apply bg-amber-600 opacity-90;
 }

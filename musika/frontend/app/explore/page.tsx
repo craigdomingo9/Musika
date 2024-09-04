@@ -15,7 +15,7 @@ async function ExplorePage({searchParams : { category }}: Props) {
   if (category == undefined) {
     url = "http://localhost:8000/api/products/sale=0&homepage=0";
   }else{
-    url = `http://localhost:8000/api/products/category=${category}`;
+    url = `http://localhost:8000/api/products/category/${category}/`;
   }
 
   const options: RequestInit = {

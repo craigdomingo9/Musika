@@ -11,7 +11,7 @@ urlpatterns = [
     path("product-variants/",ProductVariantListCreateView.as_view()),
     path("product-variant/<int:pk>",ProductVariantRetrieveUpdateDestroyView.as_view()),
     
-    path("<str:code>/", BusinessesProductsRetrieveView.as_view()),
+    path("b/<str:code>/", BusinessesProductsRetrieveView.as_view()),
     
     path("category/<str:category>/",ProductByCategoryListView.as_view()),
 

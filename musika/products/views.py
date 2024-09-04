@@ -72,6 +72,7 @@ class ProductByCategoryListView(generics.ListAPIView):
 
     def get(self,request,*args,**kwargs):
         category = kwargs["category"]
+        print(category)
 
         products_by_category = Product.objects.shuffled().filter(category__name=category)
         s_products_by_category = ProductsSerializer(products_by_category,many=True)

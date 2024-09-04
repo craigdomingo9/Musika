@@ -191,7 +191,7 @@ function BusinessSignUpCreateBusinessForm() {
                         <FormControl>
                             <div className="relative">
                                 <p className="absolute left-4 top-[.375rem] py-auto">+</p>
-                                <Input className="text-xs pl-8" type="tel" placeholder="eg. 263719867908" autoComplete="true" {...field} />
+                                <Input className="text-sm pl-8" type="tel" placeholder="eg. 263719867908" autoComplete="true" {...field} />
                             </div>
                         </FormControl>
                     <FormMessage />

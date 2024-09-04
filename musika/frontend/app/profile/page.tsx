@@ -1,44 +1,50 @@
 "use client";
-import ProfileContent from "@/components/Profile/ProfileContent"
+import ProfileEditCreateFormRenderer from "@/components/Profile/ProfileEditCreateFormRenderer";
 import ProfileHeader from "@/components/Profile/ProfileHeader"
+import { Button } from "@/components/ui/button";
 import Cookies from "js-cookie";
+import { ChevronDown, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
-
 
 
 function Profile() {
 
-  const [profile, setProfile] = useState<Profile>()
+  const [editProfile, setEditProfile] = useState<boolean>(false)
 
-  useEffect(() => {
+  const router = useRouter();
+  const [token, setToken] = useState<string | undefined>(" ")
 
-    async function getProfile(){
-      const email = Cookies.get("email");
-      const url = `http://localhost:8000/api/profiles/${email}`
+    useEffect(() => {
+        const _token = Cookies.get("token");
+        setToken(_token);
 
-      try {
-        const response = await fetch(url,{
-          method: "GET",
-        });
-        const _profile = (await response.json());
+        if (!token) {
+            router.push("/login")
+        }
+    },[])
 
-      setProfile(_profile)
-      } catch (error: any) {
-        console.log(error);
-      }
-    }
-    getProfile()
-  },[])
-  
-
-
-
-
+    
   return (
-    <div className="w-full overflow-x-hidden">
+    <div className="w-full overflow-x-hidden min-h">
+
       <ProfileHeader />
-      <ProfileContent profile={profile} />
+
+      <div className="flex justify-center pt-2 [&>Button]:w-[95%] sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem] sm:mx-auto">
+        <Button variant="outline" className="text-start " onClick={() => setEditProfile(!editProfile)}>
+            <p>Edit Profile</p>
+            {editProfile ? (
+                <ChevronDown className="h-4 w-4" />
+            ):(
+                <ChevronRight className="h-4 w-4" />
+            )}
+        </Button>
+      </div>
+
+
+      {editProfile && (
+        <ProfileEditCreateFormRenderer />
+      )}
     </div>
   )
 }
