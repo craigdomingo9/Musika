@@ -2,6 +2,7 @@
 import getProfile from "@/utils/getProfile";
 import Cookies from "js-cookie";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
@@ -10,32 +11,26 @@ type Props = {
 }
 
 function ProfileIcon({active}: Props) {
-    const [token, setToken] = useState<string | undefined>(" ")
     const [profile, setProfile] = useState<Profile | undefined>(undefined)
-
+    const [profileNotFound, setProfileNotFound] = useState<boolean>(false)
     
 
     useEffect(() => {
-        const _token = Cookies.get("token");
-        setToken(_token);
-
         const loadProfile = async () => {
             try {
-                const profile_ = await getProfile<Profile>();
-                setProfile(profile_)
-                
-            }
-            catch (err) {
-                // setError(err instanceof Error ? err.message : 'Unknown error');
+                const [_profileNotFound,profile_] = await getProfile<Profile>();
+                setProfileNotFound(_profileNotFound);
+                setProfile(profile_);
+            } 
+            catch (error) {
+                console.log(error);
             }
         }
         loadProfile()
-
     },[])
-    console.log(profile)
 
   return (
-    <div>
+    <div className='text-center flex w-full justify-center'>
         {!profile?.profile_picture &&(
             active ? (
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
@@ -48,7 +43,7 @@ function ProfileIcon({active}: Props) {
             )
         )}
         {profile?.profile_picture && (
-            <Image className="w-8 h-8 rounded-full" src={profile?.profile_picture} width={1000} height={1000} alt="profile" />
+            <Image className="w-8 h-8 object-cover rounded-full" src={profile?.profile_picture} width={1000} height={1000} alt="profile" />
         )}
     </div>
   )

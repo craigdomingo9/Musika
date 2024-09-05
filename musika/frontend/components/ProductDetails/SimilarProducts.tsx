@@ -27,13 +27,16 @@ async function SimilarProducts({id, category} : Props) {
 
   return (
     <div className="pt-2 mb-[5rem] sm:mt-5 relative">
+
         <div className="px-2 sm:pl-0">
             <p className="text-xl font-semibold">You May Also Like</p>
         </div>
+
         <div className="px-2 relative sm:pl-0 pt-4 w-full flex overflow-x-scroll overflow-y-hidden">
-            <ProductItems products={data} row={true} />
+            <ProductItems products={data} row={true} page="product_details" />
             
         </div>
+        
         <div className="absolute hidden md:block -right-10 top-[50%] text-slate-700">
             <ChevronRightCircle />
         </div>

@@ -69,7 +69,12 @@ function NavigationBar() {
             </div>
             <p className={`text-sm font-bold ${bagActive && 'font-extrabold text-black'}`}>Bag</p>
         </Link>
-        <Link href={"/profile"} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
+        <Link href={{
+            pathname: "/profile",
+            query: {
+                edit: 1
+            }
+        }} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
                 <ProfileIcon active={profileActive} />
             </div>

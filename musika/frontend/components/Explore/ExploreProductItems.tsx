@@ -7,7 +7,7 @@ import Link from "next/link";
 type Props = {
     products: Product[]
 }
-  
+
 
 function ExploreProductItems({products}: Props) {
     const base_url = "http://localhost:8000";
@@ -27,7 +27,8 @@ function ExploreProductItems({products}: Props) {
                 id: product.id,
                 on_sale: product.on_sale ? 1 : 0,
             }
-            }} key={product.id}>
+            }} 
+            key={product.id}>
                 <div className="h-[65vh] grid md:m-5 py-5 pt-2 snap-start">
                     <div className="max-h-[55vh]">
                         {product.images && (

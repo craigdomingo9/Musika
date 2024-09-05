@@ -1,3 +1,4 @@
+import { toast } from '@/components/ui/use-toast';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
@@ -25,9 +26,29 @@ const useBagStore = create<BagStore>()(
       set((state) => {
         const existingItem = state.items.find((i: BagProduct) => i.id === item.id);
         if (existingItem) {
-          existingItem.quantity += 1;
+          if (existingItem.quantity < item.stock_quantity){
+            existingItem.quantity += 1;
+            toast({
+              variant: "success",
+              description: "Product has been added to Bag",
+              duration: 1500,
+            })
+          }else{
+            toast({
+              variant: "warning",
+              description: "You cannot add more. Out of Stock",
+              duration: 1500,
+            })
+          }
+          
+          
         } else {
           state.items.push(item);
+          toast({
+            variant: "success",
+            description: "Product has been added to Bag",
+            duration: 1500,
+          })
         }
       });
     },

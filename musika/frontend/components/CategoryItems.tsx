@@ -16,6 +16,7 @@ function CategoryItems({categories,name}: CategoryItemsProps) {
             <Link href={"/"}>
                 <Button className={`m-2 ml-0 bg-white text-black font-bold text-xs rounded ${name == (undefined || "") && 'bg-color hover:bg-color hover:text-white font-bold rounded text-white'}`} >All</Button>
             </Link>
+            
             {categories.map((category) => (
                 <div key={category.id}>
                     <Link href={{

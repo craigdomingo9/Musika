@@ -106,6 +106,7 @@ type BagProduct = {
     on_sale: boolean,
     sale_price: number,
     quantity: number,
+    stock_quantity: number,
 }
 
 type CurrentProduct = {

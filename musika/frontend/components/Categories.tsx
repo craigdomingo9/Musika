@@ -12,7 +12,6 @@ type Props = {
 function Categories({name}: Props) {
 
     const [data, setData] = useState<Category[]>([]);
-    const [error, setError] = useState<string | null>(null);
     
     useEffect(() => {
         const loadCategories = async () => {
@@ -20,13 +19,12 @@ function Categories({name}: Props) {
                 const categories = await getCategories<Category[]>();
                 setData(categories)
             }
-            catch (err) {
-                setError(err instanceof Error ? err.message : 'Unknown error');
+            catch (error) {
+                console.log(error)
             }
         }
         loadCategories()
     },[])
-    // console.log(data)
 
     return (
     <div>

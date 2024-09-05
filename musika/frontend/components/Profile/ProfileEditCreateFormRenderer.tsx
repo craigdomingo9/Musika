@@ -1,46 +1,30 @@
 "use client";
 import { useEffect, useState } from "react";
+import getProfile from "@/utils/getProfile";
 import ProfileEditCreateForm from "./ProfileEditCreateForm"
-import Cookies from "js-cookie";
 
 
 
 function ProfileEditCreateFormRenderer() {
 
-    const [profile, setProfile] = useState<Profile | undefined>(undefined)
-    const [profileNotFound, setProfileNotFound] = useState<boolean>(false)
-    const [email, setEmail] = useState<string | undefined>(" ")
+  const [profile, setProfile] = useState<Profile | undefined>(undefined)
+  const [profileNotFound, setProfileNotFound] = useState<boolean>(false)
+  
 
-
-    useEffect(() => {
-        const _email = Cookies.get("email");
-        
-        setEmail(_email);
-
-        async function getProfile(){
-          const email = Cookies.get("email");
-          const url = `http://localhost:8000/api/profiles/${email}`
-    
+  useEffect(() => {
+      const loadProfile = async () => {
           try {
-            const response = await fetch(url,{
-              method: "GET",
-            });
-            const _profile = (await response.json());
-
-            if (response.ok && !profile){
-                setProfile(_profile);
-            }
-
-            if (!response.ok) {
-                setProfileNotFound(true);
-            }
-            
-          } catch (error: any) {
-            // console.log(error);
+              const [_profileNotFound,profile_] = await getProfile<Profile>();
+              setProfileNotFound(_profileNotFound);
+              setProfile(profile_);
           }
-        }
-        getProfile()
-    })
+          catch (err) {
+              // setError(err instanceof Error ? err.message : 'Unknown error');
+          }
+      }
+      loadProfile()
+
+  },[])
 
   return (
     <>

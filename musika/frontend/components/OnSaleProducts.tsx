@@ -18,7 +18,6 @@ async function OnSaleProducts() {
     const response = await fetch(url,options);
     const data = (await response.json());
 
-    // console.log(data);
 
   return (
     <div>

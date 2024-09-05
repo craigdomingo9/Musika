@@ -16,6 +16,7 @@ function ProductItems({products,row,page}: ProductItemsProps) {
     if (text.length <= length) return text;
     return text.substring(0, length) + suffix;
   };
+
   
   return (
     <>
@@ -28,27 +29,19 @@ function ProductItems({products,row,page}: ProductItemsProps) {
           }
         }} key={product.id}>
           
-            <div className={cn("grid w-40 sm:w-full mx-4 bg-opacity-70 h-40",
-                            row && "h-36 w-36 sm:ml-0 sm:w-60 sm:h-60",
-                            !row && "sm:overflow-hidden sm:w-[18rem] xl:w-[17rem] sm:border-2 sm:object-cover sm:h-[18rem] xl:h-[17rem] sm:grid ",
-                            page=="catalog" && "sm:w-[18rem] sm:flex lg:w-[19rem] xl:w-[22rem] xl:h-[22rem]",
-                            page=="business" && "sm:w-[12rem] sm:h-[12rem] md:w-[14rem] md:h-[14rem] lg:w-[19rem] lg:h-[19rem] xl:w-[22rem] xl:h-[22rem]")}>
-              <div className={cn("",!row && "sm:grid w-full")}>
+            <div className={cn("product-img-container",row && "product-row",!row && "product-not-row",page=="catalog" && "product-on-catalog",page=="business" && "product-on-business")}>
                 {product.images && (
                   <Image 
-                  className={cn("min-w-full h-full w-full rounded",!row && "max-h-full object-contain")} 
+                  className={cn("h-full w-full rounded",!row && "max-h-full object-contain")} 
                   src={`${base_url}${product.images.map((img) => img.image)}`} 
                   width={1000} 
                   height={1000} 
-                  quality={90}
+                  quality={100}
                   alt="Product Image" />
                 )}
-              </div>
             </div>
-            <div className={cn("mx-3 sm:ml-0 pt-1 border-t border-dashed",
-              !row && "h-28 w-36 mx-5 sm:mx-5 sm:w-[18rem] xl:w-[17rem]",
-              page=="catalog" && "sm:w-[18rem] lg:w-[19rem] xl:w-[22rem]",
-              page=="business" && "sm:w-[12rem] md:w-[14rem] lg:w-[19rem] xl:w-[22rem] ")}>
+
+            <div className={cn("product-text",!row && "product-not-row-text",page=="catalog" && "product-text-on-catalog",page=="business" && "product-text-on-business")}>
                 <p className="text-sm font-bold">{truncate(product.name,30)}</p>
                 <p className="text-xs opacity-70">{truncate(product.description,30)}</p>
                 <div className="flex">

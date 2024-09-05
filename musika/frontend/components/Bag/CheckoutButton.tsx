@@ -14,9 +14,7 @@ function CheckoutButton() {
     },[totalPrice])
 
   return (
-    <div className="p-2 z-50 grid fixed w-[96.5vw] sm:w-[10vw] sm:right-32 h-[10vh] bottom-14">
-        <Button disabled className="w-full h-full bg-color-btn text-lg">Checkout ${Price}</Button>
-    </div>
+      <Button className="bg-color-btn fixed sm:sticky bottom-20 left-2 sm:z-0 h-16 sm:h-10 z-50 w-[96.5vw] sm:w-32 sm:mx-2" >Checkout ${Price}</Button>
   )
 }
 

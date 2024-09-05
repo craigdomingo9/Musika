@@ -1,4 +1,3 @@
-import Link from "next/link";
 import BackButton from "../BackButton";
 import ProductDetailsBagButton from "./ProductDetailsBagButton";
 

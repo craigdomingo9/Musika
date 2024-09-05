@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { cities } from "@/utils/extras";
 import { toast } from "../ui/use-toast";
+import ProfileditCreate from "@/utils/Profile/profileEditCreate";
 
 
 type Props = {
@@ -103,35 +104,6 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
         }
     };
 
-    async function editCreatefn(url: string, data: FormData, edit: boolean,){
-        const response = await fetch(url, {
-            method: edit ? "PUT": "POST",
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-            body: data,
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            toast({
-                variant: "destructive",
-                description: errorData.detail,
-                duration: 1500,
-            })
-        }
-
-        const responseData = await response.json();
-        
-        if(response.ok){
-            toast({
-                variant: "green",
-                description: responseData.detail,
-                duration: 3000,
-            });
-            router.refresh();
-        }
-    }
 
     async function onSubmit(data: z.infer<typeof profileEditCreateFormSchema>) {
         const formData = new FormData();
@@ -150,7 +122,7 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
                 : 
                 "http://localhost:8000/api/profiles/create";
         
-        editCreatefn(url,formData,editProfile);
+        ProfileditCreate(url,formData,editProfile,token,router);
         
     }
 
