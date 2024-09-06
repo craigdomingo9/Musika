@@ -16,7 +16,7 @@ class BusinessAnalytics(models.Model):
 
 
 class BusinessPageViews(models.Model):
-    business = models.ForeignKey(BusinessAnalytics,primary_key=True,on_delete=models.CASCADE,related_name="business_page_views")
+    business = models.ForeignKey(BusinessAnalytics,on_delete=models.CASCADE,related_name="business_page_views")
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="business_page_views")
     view_date = models.DateField(auto_now_add=True)
 

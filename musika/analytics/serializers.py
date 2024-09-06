@@ -5,11 +5,11 @@ from rest_framework import serializers
 
 
 
-# class BusinessAnalyticsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = BusinessAnalytics
-#         fields = ["business", "business_page_views"]
-#         depth = 2
+class BusinessAnalyticsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessAnalytics
+        fields = ["business", "business_page_views"]
+        depth = 2
 
 
 class ProductAnalyticsSerializer(serializers.ModelSerializer):
@@ -31,10 +31,10 @@ class ProductViewsAddSerializer(serializers.ModelSerializer):
         model = ProductViews
         fields = ["product", "profile", "view_date"]
 
-# class BusinessPageViewsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = BusinessPageViews
-#         fields = ["business", "profile", "view_date"]
+class BusinessPageViewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BusinessPageViews
+        fields = ["business", "profile", "view_date"]
 
 
 

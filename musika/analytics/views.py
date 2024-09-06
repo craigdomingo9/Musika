@@ -9,13 +9,13 @@ from .serializers import *
 
 
 # Create your views here.
-# class BusinessAnalyticsListView(generics.ListAPIView):
-#     queryset = BusinessAnalytics.objects.all()
-#     serializer_class = BusinessAnalyticsSerializer
+class BusinessAnalyticsListView(generics.ListAPIView):
+    queryset = BusinessAnalytics.objects.all()
+    serializer_class = BusinessAnalyticsSerializer
 
-# class BusinessAnalyticsRetrieveView(generics.RetrieveAPIView):
-#     queryset = BusinessAnalytics.objects.all()
-#     serializer_class = BusinessAnalyticsSerializer
+class BusinessAnalyticsRetrieveView(generics.RetrieveAPIView):
+    queryset = BusinessAnalytics.objects.all()
+    serializer_class = BusinessAnalyticsSerializer
 
 
 
@@ -35,9 +35,9 @@ class ProductBagAddsAddView(generics.CreateAPIView):
     queryset = ProductBagAdds.objects.all()
     serializer_class = ProductBagAddSerializer
 
-# class BusinessPageViewAddView(generics.CreateAPIView):
-#     queryset = BusinessPageViews.objects.all()
-#     serializer_class = BusinessPageViewsSerializer
+class BusinessPageViewAddView(generics.CreateAPIView):
+    queryset = BusinessPageViews.objects.all()
+    serializer_class = BusinessPageViewsSerializer
 
 class ProductAnalyticsForBusinessView(APIView):
     queryset = ProductAnalytics.objects.all()
