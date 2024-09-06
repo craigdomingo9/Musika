@@ -7,6 +7,8 @@ class Profile(models.Model):
     credentials = models.OneToOneField(Credentials,on_delete=models.CASCADE,primary_key=True,related_name="profile")
     first_name = models.CharField(null=True,max_length=30)
     last_name = models.CharField(null=True,max_length=30)
+    gender = models.CharField(null=True,max_length=30)
+    age = models.CharField(default=18,null=True,max_length=30)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     profile_picture = models.ImageField(upload_to="./images/profiles")
     address = models.CharField(max_length=255,blank=True,null=True)
