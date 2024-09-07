@@ -13,7 +13,9 @@ function Header() {
     useEffect(() => {
         setToken(Cookies?.get("token"));
         setBusinessCode(Cookies?.get("business_code"));
-    })
+    },[token,businessCode])
+
+    console.log(token,businessCode)
 
   return (
     <header className="w-full grid sticky top-0 z-50 sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem] sm:mx-auto bg-white border-b border-slate-200 mb-2">

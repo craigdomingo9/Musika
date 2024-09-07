@@ -59,7 +59,14 @@ function ProductDetailsMainContent({images,global_product_details,product_detail
             <CarouselContent className="h-[22rem]">
               {images.map((image) => (
                 <CarouselItem key={image?.id}>
-                    <Image className="min-h-full object-fill min-w-full h-full" src={`${image?.image}`} height={1000} width={1000} alt={image.alt ? image.alt : `${global_product_details.name} Image`} priority />
+                    <Image 
+                        className="min-h-full object-fill min-w-full h-full" 
+                        src={`${image?.image}`} 
+                        height={1000} 
+                        width={1000} 
+                        alt={image.alt ? image.alt : `${global_product_details.name} Image`} 
+                        priority 
+                    />
                 </CarouselItem>
               ))}
             </CarouselContent>

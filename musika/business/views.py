@@ -10,7 +10,6 @@ class BusinessesListCreateView(generics.ListCreateAPIView):
     serializer_class = BusinessCreateSerializer
 
 
-
 class BusinessCreateView(APIView):
     serializer_class = BusinessCreateSerializer
 

@@ -33,7 +33,7 @@ function ProductItems({products,row,page}: ProductItemsProps) {
                 {product.images && (
                   <Image 
                   className={cn("h-full w-full rounded",!row && "max-h-full object-contain")} 
-                  src={`${base_url}${product.images.map((img) => img.image)}`} 
+                  src={`${base_url}${product.images[0].image}`} 
                   width={1000} 
                   height={1000} 
                   quality={100}

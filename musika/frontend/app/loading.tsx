@@ -7,7 +7,7 @@ function loading() {
     <div className='grid h-screen'>
       <Button disabled variant={"ghost"} className='m-auto'>
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        Please wait
+        Please wait...
     </Button>
     </div>
   )

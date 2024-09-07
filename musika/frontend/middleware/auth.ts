@@ -23,7 +23,9 @@ export const verifyToken = async (router: AppRouterInstance) => {
 
         if(response.account_type == "business"){
             Cookies.remove("location_is_setup");
-            router.push(`/b/${details.code}/admin/`);
+            Cookies.set("business_code",details.code, { expires: 7 });
+            console.log(details.code);
+            router.push(`/b/${details.code}/admin?page=home`);
         }else{
             Cookies.remove("business_code");
             Cookies.remove("business_email");

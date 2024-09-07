@@ -8,7 +8,7 @@ function ProductDetailsSplit(data: any) : [
     Catalog
 ] {
 
-    const images: ProductImage[] = [data["images"][0] as ProductImage,...data["variant"]];
+    const images: ProductImage[] = data["images"];
 
     const main_details : ProductDetails = {
       id: data["id"],

@@ -30,7 +30,11 @@ class SubscriptionsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Subscription
-        fields = '__all__'
+        fields = ['id', 'plan', 'interval', 'payment_amount', 'status']
+        depth = 2
+
+    def get_is_active(self, obj):
+        return obj.status
 
 class LocationSerializer(serializers.ModelSerializer):
 

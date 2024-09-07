@@ -2,6 +2,7 @@
 import ProfileEditCreateFormRenderer from "@/components/Profile/ProfileEditCreateFormRenderer";
 import ProfileHeader from "@/components/Profile/ProfileHeader"
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import Cookies from "js-cookie";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -26,20 +27,26 @@ function Profile({searchParams: {edit}}: Props) {
 
     useEffect(() => {
         const _token = Cookies.get("token");
+
         setToken(_token);
 
         if (!token) {
+            toast({
+              variant: "warning",
+              description: "Please log in to access your profile",
+              duration: 3000,
+            })
             router.push("/login")
         }
 
         
 
-        if (edit) {
+        if (edit && token) {
           setEditProfile(true)
         }
 
 
-    },[])
+    },[token])
 
     function editProfilefn(){
       setEditProfile(!editProfile)
@@ -52,7 +59,7 @@ function Profile({searchParams: {edit}}: Props) {
 
     
   return (
-    <div className="w-full overflow-x-hidden min-h">
+    <div className="w-full overflow-x-hidden relative min-h">
 
       <ProfileHeader />
 

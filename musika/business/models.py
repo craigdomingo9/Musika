@@ -80,7 +80,26 @@ class Subscription(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def is_active(self):
+        return self.end_date is not None and timezone.now().date() <= self.end_date
+    
+    
+    @property
+    def status(self):
+        return {
+            "status": f"{self.is_active and "Active"}",
+            "end_date": self.end_date.strftime('%d %B %Y')
+            }
+    
+    def __str__(self):
+        return f"{self.business.name} - {self.plan.name} - {self.status}  - {self.interval} subscription"
+
+
     def save(self, *args, **kwargs):
+        if not self.start_date:
+            self.start_date = timezone.now().date()
+
         if self.interval == 'monthly':
             self.end_date = self.start_date + timezone.timedelta(days=30)
             self.payment_amount = self.plan.price
@@ -88,17 +107,12 @@ class Subscription(models.Model):
             self.end_date = self.start_date + timezone.timedelta(days=90)
             self.payment_amount = self.plan.price * 3 
         elif self.interval == 'yearly':
-            print("yeah")
-            self.end_date = datetime.now().date() + timezone.timedelta(days=365)
+            self.end_date = self.start_date + timezone.timedelta(days=365)
             self.payment_amount = self.plan.price * 12 
         super().save(*args, **kwargs)
 
-    @property
-    def is_active(self):
-        return self.start_date <= timezone.now().date() <= self.end_date
-    
-    def __str__(self):
-        return f"{self.business.name} - {self.plan.name} - {self.is_active} - {self.interval} subscription"
+
+
 
 
 

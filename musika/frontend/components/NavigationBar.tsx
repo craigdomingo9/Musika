@@ -4,6 +4,7 @@ import navigators from '@/utils/navigator';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import ProfileIcon from './Navigation/ProfileIcon';
+import Cookies from "js-cookie";
 
 
 function NavigationBar() {
@@ -12,10 +13,12 @@ function NavigationBar() {
 
     const products = useBagStore((state) => state.getTotalItems());
     const [count, setCount] = useState(0);
+    const [businessCode, setBusinessCode] = useState<string>()
 
     useEffect(() => {
-        setCount(products)
-    },[products])
+        setBusinessCode(Cookies?.get("business_code"));
+        setCount(products);
+    },[businessCode,products])
 
   return (
     <div className="fixed sm:sticky sm:h-[80vh] sm:top-[10%] z-50 bottom-0 left-0 w-full shadow-top bg-white">
@@ -69,16 +72,13 @@ function NavigationBar() {
             </div>
             <p className={`text-sm font-bold ${bagActive && 'font-extrabold text-black'}`}>Bag</p>
         </Link>
-        <Link href={{
-            pathname: "/profile",
-            query: {
-                edit: 1
-            }
-        }} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
+        <Link href={businessCode ? `/b/${businessCode}/admin?page=home`: "/profile?edit=1"} className="grid sm:py-4 text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
                 <ProfileIcon active={profileActive} />
             </div>
-            <p className={`text-sm font-bold ${profileActive && 'font-extrabold text-black'}`}>Profile</p>
+            <p className={`text-sm font-bold ${profileActive && 'font-extrabold text-black'}`}>
+            {businessCode ? "Manage" : "Profile"}
+            </p>
         </Link>
         </div>
     </div>

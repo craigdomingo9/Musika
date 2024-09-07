@@ -32,11 +32,19 @@ function navigators(): [boolean,boolean,boolean,boolean] {
         bagActive = false;
         profileActive = true;
         break;
+    
     default:
-        homeActive = true;
+        homeActive = false;
         exploreActive = false;
         bagActive = false;
         profileActive = false;
+    }
+
+    if (pathname.endsWith("/admin")){
+        homeActive = false;
+        exploreActive = false;
+        bagActive = false;
+        profileActive = true;
     }
   return [homeActive, exploreActive, bagActive, profileActive]
 }

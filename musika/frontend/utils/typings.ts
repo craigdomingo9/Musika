@@ -127,3 +127,33 @@ type Profile = {
     phone_number: string,
     profile_picture: string,
   }
+
+type BusinessSubscription = {
+    id: number,
+    plan: Plan,
+    interval: string,
+    payment_amount: string,
+    status: SubscriptionStatus
+}
+
+type SubscriptionStatus = {
+    status: string,
+    end_date: string,
+}
+
+
+type Plan = {
+    id: number,
+    name: string,
+    description: string,
+    price: string,
+    features: Feature[],
+
+}
+
+type Feature = {
+    id: number,
+    name: string,
+    description: string,
+}
+
