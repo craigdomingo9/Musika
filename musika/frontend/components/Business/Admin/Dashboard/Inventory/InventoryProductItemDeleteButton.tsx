@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from "@/components/ui/use-toast";
 import productDelete from "@/utils/Business/productDelete";
+import useActionStore from "@/stores/ActionStore";
 
 
 
@@ -24,16 +25,18 @@ type Props = {
 
 function InventoryProductItemDeleteButton({product}: Props) {
     const router = useRouter();
+    const { actionOccurred, toggleActionOccurred } = useActionStore();
 
 
     async function deleteProduct() {
         console.log("---------");
-        if (await productDelete(product.id.toString(),false,router)){
+        if (await productDelete(product.id.toString(),false)){
             toast({
                 variant: "green",
                 description: "Product was deleted sucessfully",
                 duration: 1500,
             })
+            toggleActionOccurred(!actionOccurred);
         }
     }
 

@@ -1,5 +1,4 @@
 import { toast } from "@/components/ui/use-toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 
 async function productImageCreate(url: string, data: FormData): Promise<boolean> {
@@ -15,14 +14,6 @@ async function productImageCreate(url: string, data: FormData): Promise<boolean>
             description: errorData.detail,
             duration: 1500,
         })
-    }
-
-    if (response.ok) {
-        toast({
-            variant: "green",
-            description: "Product has been created successfully.",
-            duration: 3000,
-        });
     }
 
     return response.ok;

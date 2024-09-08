@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import InventoryProductItem from "./InventoryProductItem";
 import InventoryDeleteCatalog from "./InventoryDeleteCatalog";
 import InventoryCatalogAddProduct from "./InventoryCatalogAddProduct";
+import useActionStore from "@/stores/ActionStore";
 
 
 type Props = {
@@ -13,6 +14,7 @@ type Props = {
 function InventoryProductItems({catalog,category}: Props) {
 
     const [products, setProducts] = useState<Product[]>()
+    const { actionOccurred, toggleActionOccurred } = useActionStore();
 
     useEffect(() => {
         async function loadCatalogs(){
@@ -20,7 +22,10 @@ function InventoryProductItems({catalog,category}: Props) {
             setProducts(catalogs_data);
         }
         loadCatalogs()
-    },[])
+
+        
+        toggleActionOccurred(false);
+    },[actionOccurred])
 
   return (
     <div className="w-full grid grid-cols-2 gap-2 place-items-center">

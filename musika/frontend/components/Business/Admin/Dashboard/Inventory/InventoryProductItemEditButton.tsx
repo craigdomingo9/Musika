@@ -1,16 +1,21 @@
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
+    DialogClose,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
+    DialogOverlay,
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import InventoryProductItemEditForm from "./InventoryProductItemEditForm";
+import useActionStore from "@/stores/ActionStore";
+import { useEffect, useState } from "react";
+import { AlertDialogOverlay } from "@/components/ui/alert-dialog";
   
 
 type Props = {
@@ -18,10 +23,19 @@ type Props = {
 }
 
 function InventoryProductItemEditButton({product}: Props) {
+    const { actionOccurred,toggleActionOccurred } = useActionStore();
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false)
+
+    useEffect(() => {
+
+        setDialogOpen(false);
+    },[actionOccurred])
+
+
   return (
     <>
-        <Dialog>
-            <DialogTrigger>
+        <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(!dialogOpen)}>
+            <DialogTrigger onClick={() => setDialogOpen(!dialogOpen)}>
                 <div className="w-full flex h-10 border-t place-items-center justify-center text-amber-600 opacity-90 right-0 bottom-0">
                     <p>Edit&nbsp;</p>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -29,7 +43,15 @@ function InventoryProductItemEditButton({product}: Props) {
                     </svg>
                 </div>
             </DialogTrigger>
-            <InventoryProductItemEditForm product={product} />
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Edit Product</DialogTitle>
+                    <DialogDescription>
+                        Make changes to your product here. Click save when you're done.
+                    </DialogDescription>
+                </DialogHeader>
+                <InventoryProductItemEditForm product={product} />
+            </DialogContent>
         </Dialog>
 
     </>

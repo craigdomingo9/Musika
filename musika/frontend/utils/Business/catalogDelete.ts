@@ -1,7 +1,7 @@
 import { toast } from "@/components/ui/use-toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-async function catalogDelete(catalog: number,router: AppRouterInstance) {
+
+async function catalogDelete(catalog: number) {
     const url = `http://localhost:8000/api/products/catalogs/${catalog}`;
 
     const response = await fetch(url, {
@@ -15,9 +15,6 @@ async function catalogDelete(catalog: number,router: AppRouterInstance) {
             description: errorData.detail,
             duration: 1500,
         })
-    }
-    if (response.ok) {
-        router.refresh();
     }
 
     return response.ok;

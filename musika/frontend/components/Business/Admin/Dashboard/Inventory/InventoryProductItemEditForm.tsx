@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { DialogContent, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog"
+import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog"
 import { DialogTitle } from "@radix-ui/react-dialog"
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,6 +26,7 @@ import productEditCreate from "@/utils/Business/productEditCreate";
 import productImageCreate from "@/utils/Business/productImageCreate";
 import { toast } from "@/components/ui/use-toast";
 import InventoryProductItemEditFormDeleteImageButton from "./InventoryProductItemEditFormDeleteImageButton";
+import useActionStore from "@/stores/ActionStore";
 
 
 
@@ -50,7 +51,7 @@ function InventoryProductItemEditForm({product}: Props) {
     const base_url = "http://localhost:8000";
     const [imagePreviews, setImagePreviews] = useState<string[] | null>(null);
     const [defaultImages, setDefaultImages] = useState<File[] | null>(null);
-    const router = useRouter();
+    const { actionOccurred, toggleActionOccurred } = useActionStore();
     
     const form = useForm<z.infer<typeof ProductEditSchema>>({
         resolver: zodResolver(ProductEditSchema),
@@ -79,6 +80,9 @@ function InventoryProductItemEditForm({product}: Props) {
 
     useEffect(() => {
         
+        form.setValue(
+            "images",[]
+        )
         const loadImages = async () => {
             const files = await Promise.all(
                 product.images.map(async (image) => {
@@ -98,7 +102,7 @@ function InventoryProductItemEditForm({product}: Props) {
 
         loadImages();
 
-    },[product])
+    },[product,actionOccurred])
 
 
     const editQuantity = (action: string) => {
@@ -156,38 +160,36 @@ function InventoryProductItemEditForm({product}: Props) {
         }
 
 
-        let productImageUpdated: boolean = false;
+        
         if (productUpdated) {
             const url = `http://localhost:8000/api/products/images/create/`;
             const ImagesToUpload = getImagesToUpload(data.images);
 
             
-            ImagesToUpload?.map(async (image) => {
-                const ImageFormData = new FormData();
-                ImageFormData.append("product",product.id.toString())
-                ImageFormData.append("image",image)
-                productImageUpdated = await productImageCreate(url,ImageFormData);
-                
-            })
-            if (productImageUpdated){
+            
+            try {
+                ImagesToUpload?.map(async (image) => {
+                    const ImageFormData = new FormData();
+                    ImageFormData.append("product",product.id.toString())
+                    ImageFormData.append("image",image)
+                    await productImageCreate(url,ImageFormData)   
+                })
+            } catch {
+                console.log("Error occured.");
+            }
+            finally {
                 toast({
                     variant: "green",
                     description: "Product has been changed successfully.",
                     duration: 3000,
                 });
-                
+                toggleActionOccurred(!actionOccurred);
             }
         }
     };
 
   return (
-    <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-            <DialogTitle>Edit Product</DialogTitle>
-            <DialogDescription>
-                Make changes to your product here. Click save when you're done.
-            </DialogDescription>
-        </DialogHeader>
+    
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3">
                 <Tabs defaultValue="details" className="min-h-full">
@@ -301,8 +303,9 @@ function InventoryProductItemEditForm({product}: Props) {
                                     priority
                                     />
                                     
-
-                                    <InventoryProductItemEditFormDeleteImageButton product={product} index={index} />
+                                    {defaultImages && defaultImages?.length > 1 && (
+                                        <InventoryProductItemEditFormDeleteImageButton product={product} index={index} />
+                                    )}
                                 </div>
 
                             ))}
@@ -338,7 +341,7 @@ function InventoryProductItemEditForm({product}: Props) {
                 </Tabs>
             </form>
         </Form>
-    </DialogContent>
+    
   )
 }
 

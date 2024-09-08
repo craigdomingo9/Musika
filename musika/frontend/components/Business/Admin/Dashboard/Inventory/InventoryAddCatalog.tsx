@@ -30,6 +30,7 @@ import getCategories from "@/utils/getCategories";
 import getBusinessCode from "@/utils/Business/getBusinessCode";
 import { useRouter } from "next/navigation";
 import { toast } from "@/components/ui/use-toast";
+import useActionStore from "@/stores/ActionStore";
 
 
 const CatalogSchema = z.object({
@@ -40,8 +41,8 @@ const CatalogSchema = z.object({
 
 function InventoryAddCatalog() {
     const [data, setData] = useState<Category[]>([]);
-    const router = useRouter();
-
+    const { secondaryActionOccured,toggleSecondaryActionOccurred } = useActionStore();
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false)
 
     const form = useForm<z.infer<typeof CatalogSchema>>({
         resolver: zodResolver(CatalogSchema),
@@ -60,7 +61,9 @@ function InventoryAddCatalog() {
             } catch{}
         }
         loadCategories()
-    },[])
+
+        setDialogOpen(false);
+    },[secondaryActionOccured])
 
 
     async function onSubmit(values: z.infer<typeof CatalogSchema>) {
@@ -98,15 +101,15 @@ function InventoryAddCatalog() {
                     description: responseData.detail,
                     duration: 3000,
                 });
-                router.refresh();
+                toggleSecondaryActionOccurred(!secondaryActionOccured);
             }
 
         } catch {}
     }
 
   return (
-    <Dialog>
-      <DialogTrigger className="grid w-full my-6 rounded-md border p-2 text-sm">
+    <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(!dialogOpen)}>
+      <DialogTrigger onClick={() => setDialogOpen(true)} className="grid w-full my-6 rounded-md border p-2 text-sm">
             Create a catalog
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

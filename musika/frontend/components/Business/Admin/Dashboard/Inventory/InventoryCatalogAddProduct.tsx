@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import productEditCreate from "@/utils/Business/productEditCreate";
 import productImageCreate from "@/utils/Business/productImageCreate";
 import { toast } from "@/components/ui/use-toast";
@@ -32,6 +32,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getBusinessCode from "@/utils/Business/getBusinessCode";
+import useActionStore from "@/stores/ActionStore";
 
 
 type Props = {
@@ -55,7 +56,10 @@ const ProductCreateSchema = z.object({
 
 function InventoryCatalogAddProduct({catalog,category}: Props) {
     const [imagePreviews, setImagePreviews] = useState<string[] | null>(null);
-    const router = useRouter();
+
+    const { actionOccurred, toggleActionOccurred } = useActionStore();
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
 
     const form = useForm<z.infer<typeof ProductCreateSchema>>({
         resolver: zodResolver(ProductCreateSchema),
@@ -125,21 +129,32 @@ function InventoryCatalogAddProduct({catalog,category}: Props) {
             const url = `http://localhost:8000/api/products/images/create/`;
             
 
-            let productImageCreated = false;
             data.images?.map(async (image) => {
                 const ImageFormData = new FormData();
                 ImageFormData.append("product",product_id.toString())
                 ImageFormData.append("image",image)
-                productImageCreated = await productImageCreate(url,ImageFormData);
+                await productImageCreate(url,ImageFormData);
             })
+
+            toggleActionOccurred(true);
             
         }
     }
 
+    useEffect(() => {
+
+        form.setValue(
+            "images", [],
+        )
+        setImagePreviews([])
+        setDialogOpen(false);
+
+    },[actionOccurred])
+
 
   return (
-    <Dialog>
-        <DialogTrigger className="w-full bg-green-50 grid place-items-center min-h-56 rounded-xl border">
+    <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(!dialogOpen)}>
+        <DialogTrigger onClick={() => setDialogOpen(true)} className="w-full bg-green-50 grid place-items-center min-h-48 max-h-64 max-w-64 rounded-xl border">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>

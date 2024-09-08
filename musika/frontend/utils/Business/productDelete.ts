@@ -1,8 +1,6 @@
 import { toast } from "@/components/ui/use-toast";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-
-async function productDelete(id: string, isDeleteImage: boolean, router:AppRouterInstance) {
+async function productDelete(id: string, isDeleteImage: boolean) {
     const url = isDeleteImage ?
     `http://localhost:8000/api/products/images/delete/${id}/`:
     `http://localhost:8000/api/products/${id}`
@@ -20,10 +18,6 @@ async function productDelete(id: string, isDeleteImage: boolean, router:AppRoute
             duration: 1500,
         })
     }
-    if (response.ok) {
-        router.refresh();
-    }
-
     return response.ok;
     
 }

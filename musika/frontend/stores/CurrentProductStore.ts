@@ -18,6 +18,7 @@ const BagProductDefault = {
   on_sale: false,
   sale_price: 0,
   quantity: 0,
+  stock_quantity: 0
 }
 
 const useCurrentProductStore = create<CurrentProductStore>((set) => ({

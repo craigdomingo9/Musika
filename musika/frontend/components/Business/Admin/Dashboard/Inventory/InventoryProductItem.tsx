@@ -12,11 +12,11 @@ function InventoryProductItem({product}: Props) {
     const backend_url = "http://localhost:8000"
 
   return (
-    <div className="w-full flex flex-col justify-center min-h-56 rounded-xl border">
-        <div className="grid place-items-center min-h-48">
+    <div className="w-full flex flex-col justify-center min-h-48 max-w-64 lg:max-w-72 rounded-xl border">
+        <div className="grid place-items-center min-h-48 max-h-64 max-w-64 lg:max-h-72 lg:max-w-72">
             {product.images[0]?.image ? (
                 <Image 
-                className="rounded-md" 
+                className="rounded-md"  
                 src={`${backend_url}${product.images[0]?.image}`} 
                 height={500} 
                 width={500} 

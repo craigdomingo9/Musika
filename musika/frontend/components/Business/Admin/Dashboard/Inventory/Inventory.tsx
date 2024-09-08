@@ -8,13 +8,15 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import InventoryProductItems from "./InventoryProductItems";
-import { Button } from "@/components/ui/button";
 import InventoryAddCatalog from "./InventoryAddCatalog";
+import { useRouter } from "next/navigation";
+import useActionStore from "@/stores/ActionStore";
   
 
 
 function Inventory() {
     const [catalogs, setCatalogs] = useState<Catalog[]>()
+    const { secondaryActionOccured,toggleSecondaryActionOccurred } = useActionStore();
 
     useEffect(() => {
         async function loadCatalogs(){
@@ -22,7 +24,8 @@ function Inventory() {
             setCatalogs(catalogs_data);
         }
         loadCatalogs()
-    },[])
+
+    },[secondaryActionOccured])
 
   return (
     <div className="mx-4 mb-20">
