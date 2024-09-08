@@ -29,10 +29,24 @@ class CatalogCreateView(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            
             return Response({"detail": "Catalog was created successfully."}, status=status.HTTP_200_OK)
         else:
             print(serializer.errors)
             return Response({"detail": "Failed to create catalog. Try Again."}, status=status.HTTP_400_BAD_REQUEST)
+
+class ProductCreateView(APIView):
+    queryset = Product.objects.all()
+    
+    def post(self,request):
+        serializer = ProductCreateSerializer(data=request.data)
+
+        if serializer.is_valid():
+            product = serializer.save()
+            return Response({"id":product.id,"detail": "Product was created successfully."}, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({"detail": "Failed to create product. Try Again."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -159,7 +173,7 @@ class ProductImageCreateView(generics.CreateAPIView):
 
 class ProductImageDeleteView(generics.DestroyAPIView):
     queryset = ProductImage
-    serializer_class = ProductSerializer
+    serializer_class = ProductImageSerializer
 
 
 class ProductImageRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):

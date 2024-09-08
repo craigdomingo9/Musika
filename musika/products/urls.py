@@ -14,7 +14,7 @@ urlpatterns = [
     path("b/<str:code>/", BusinessesProductsRetrieveView.as_view()),
     
 
-
+    path("create/",ProductCreateView.as_view()),
     path("images/create/",ProductImageCreateView.as_view()),
     path("images/delete/<int:pk>/",ProductImageDeleteView.as_view()),
     path("<int:pk>/",ProductRetrieveDestroyView.as_view()),
@@ -26,8 +26,8 @@ urlpatterns = [
 
     path("catalogs/",CatalogListCreateView.as_view()),
     path("catalogs/create/",CatalogCreateView.as_view()),
-
     path("catalogs/<int:pk>/",CatalogRetrieveUpdateDestroyView.as_view()),
+    
     path("catalogs/b/<str:code>/", BusinessesCatalogsRetrieveView.as_view()),
     path("catalog/<int:catalog>/",ProductByCatalogListView.as_view()),
 ]

@@ -1,13 +1,16 @@
 import getCatalogProducts from "@/utils/Business/getCatalogProducts";
 import { useEffect, useState } from "react";
 import InventoryProductItem from "./InventoryProductItem";
+import InventoryDeleteCatalog from "./InventoryDeleteCatalog";
+import InventoryCatalogAddProduct from "./InventoryCatalogAddProduct";
 
 
 type Props = {
-    catalog: number;
+    catalog: number,
+    category: number,
 }
 
-function InventoryProductItems({catalog}: Props) {
+function InventoryProductItems({catalog,category}: Props) {
 
     const [products, setProducts] = useState<Product[]>()
 
@@ -20,10 +23,12 @@ function InventoryProductItems({catalog}: Props) {
     },[])
 
   return (
-    <div className="w-full grid grid-cols-2 gap-2 place-items-center mb-16">
+    <div className="w-full grid grid-cols-2 gap-2 place-items-center">
         {products && products.map((product) => (
             <InventoryProductItem key={product.id} product={product} />
         ))}
+        <InventoryCatalogAddProduct catalog={catalog} category={category} />
+        <InventoryDeleteCatalog catalog={catalog} />
     </div>
   )
 }

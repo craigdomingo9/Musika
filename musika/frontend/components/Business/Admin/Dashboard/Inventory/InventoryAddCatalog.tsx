@@ -173,7 +173,7 @@ function InventoryAddCatalog() {
                 />
 
                 <DialogFooter>
-                    <Button type="submit">Save changes</Button>
+                    <Button type="submit">Create Catalog</Button>
                 </DialogFooter>
             </form>
             </Form>

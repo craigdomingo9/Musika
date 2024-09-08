@@ -16,11 +16,11 @@ class CatalogCreateSerializer(serializers.ModelSerializer):
         fields = ["business","name","description","category"]
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = "__all__"
+        fields = ["name","catalog","category","business","description","price","on_sale","sale_price","inventory_quantity"]
 
 class ProductImageSerializer(serializers.ModelSerializer):
 

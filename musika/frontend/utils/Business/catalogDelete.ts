@@ -1,11 +1,11 @@
 import { toast } from "@/components/ui/use-toast";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+async function catalogDelete(catalog: number,router: AppRouterInstance) {
+    const url = `http://localhost:8000/api/products/catalogs/${catalog}`;
 
-async function productImageCreate(url: string, data: FormData): Promise<boolean> {
     const response = await fetch(url, {
-        method: "POST",
-        body: data,
+        method: "DELETE"
     });
 
     if (!response.ok) {
@@ -16,16 +16,11 @@ async function productImageCreate(url: string, data: FormData): Promise<boolean>
             duration: 1500,
         })
     }
-
     if (response.ok) {
-        toast({
-            variant: "green",
-            description: "Product has been created successfully.",
-            duration: 3000,
-        });
+        router.refresh();
     }
 
     return response.ok;
 }
 
-export default productImageCreate
+export default catalogDelete

@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button"
-import { DialogContent, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog"
-import { DialogTitle } from "@radix-ui/react-dialog"
+import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -13,31 +11,40 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import Image from "next/image";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 import productEditCreate from "@/utils/Business/productEditCreate";
 import productImageCreate from "@/utils/Business/productImageCreate";
 import { toast } from "@/components/ui/use-toast";
-import InventoryProductItemEditFormDeleteImageButton from "./InventoryProductItemEditFormDeleteImageButton";
-
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import getBusinessCode from "@/utils/Business/getBusinessCode";
 
 
 type Props = {
-    product: Product
+    catalog: number,
+    category: number,
 }
 
-const ProductEditSchema = z.object({
+
+const ProductCreateSchema = z.object({
     name: z.string().min(2).max(100),
+    description: z.string().min(2).max(300),
     images: z.array(z.instanceof(File))
             .min(1, 'At least one image is required.'),
-    description: z.string().min(5),
     price: z.string(),
     on_sale: z.boolean(),
     sale_price: z.string().optional(),
@@ -46,60 +53,22 @@ const ProductEditSchema = z.object({
 
 
 
-function InventoryProductItemEditForm({product}: Props) {
-    const base_url = "http://localhost:8000";
+function InventoryCatalogAddProduct({catalog,category}: Props) {
     const [imagePreviews, setImagePreviews] = useState<string[] | null>(null);
-    const [defaultImages, setDefaultImages] = useState<File[] | null>(null);
     const router = useRouter();
-    
-    const form = useForm<z.infer<typeof ProductEditSchema>>({
-        resolver: zodResolver(ProductEditSchema),
+
+    const form = useForm<z.infer<typeof ProductCreateSchema>>({
+        resolver: zodResolver(ProductCreateSchema),
         defaultValues: {
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            on_sale: product.on_sale,
-            sale_price: product.sale_price,
-            inventory_quantity: product.inventory_quantity,
+            name: "Organic Fertilizer",
+            description: "For your domestic crops to flourish.",
+            price: "25",
+            on_sale: false,
+            sale_price: "",
+            inventory_quantity: 1,
             images: [],
         }
     });
-
-    async function setImagesDefaultfn(imageUrl: string) {
-        const response = await fetch(imageUrl);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        
-        const blob = await response.blob();
-        const blobExt = blob.type.split("/")[1];
-        const file = new File([blob], `image.${blobExt}`, { type: blob.type });
-        return file;
-    }
-
-    useEffect(() => {
-        
-        const loadImages = async () => {
-            const files = await Promise.all(
-                product.images.map(async (image) => {
-                    const _image = `${base_url}${image.image}`;
-                    const file = await setImagesDefaultfn(_image);
-                    return file;
-                })
-            );
-            setDefaultImages([...files]);
-
-            // Set the images in form state
-            form.setValue("images", files);
-            // Create image previews
-            const previews = files.map(file => URL.createObjectURL(file));
-            setImagePreviews(previews);
-        };
-
-        loadImages();
-
-    },[product])
-
 
     const editQuantity = (action: string) => {
         if (action == "increment") {
@@ -109,7 +78,7 @@ function InventoryProductItemEditForm({product}: Props) {
             form.setValue("inventory_quantity",(form.getValues("inventory_quantity")-1))
         }
     }
-    
+
     const handleImageChange = (files: FileList | null) => {
         
         if (files) {
@@ -120,7 +89,7 @@ function InventoryProductItemEditForm({product}: Props) {
     
             // Combine existing files with new files
             const combinedFiles = [...existingFiles, ...newFilesArray];
-    
+
             // Generate previews for all files
             const previews = combinedFiles.map(file => URL.createObjectURL(file));
             setImagePreviews(previews);
@@ -134,61 +103,55 @@ function InventoryProductItemEditForm({product}: Props) {
         return [];
     };
 
-   
-    
-    const onSubmit = async (data: z.infer<typeof ProductEditSchema>) => {
+    const onSubmit = async (data: z.infer<typeof ProductCreateSchema>) => {
+        console.log("-------")
         const formData = new FormData();
-        formData.append("id", product.id.toString());
+        const businessCode = getBusinessCode();
+
         formData.append('name', data.name);
         formData.append('description', data.description);
         formData.append('price', data.price);
+        formData.append("business",businessCode ? businessCode : "")
+        formData.append('catalog', catalog.toString());
+        formData.append('category', category.toString());
         formData.append('on_sale', String(data.on_sale));
         formData.append('sale_price', data.on_sale ? String(data.sale_price) : "0");
         formData.append('inventory_quantity', String(data.inventory_quantity));
 
 
+        const [product_id,productCreated] = await productEditCreate(formData,false)
 
-        const [_,productUpdated] = await productEditCreate(formData,true)
-        
-
-        function getImagesToUpload(newImages: File[] | undefined){
-            return newImages?.filter(image => !defaultImages?.includes(image));
-        }
-
-
-        let productImageUpdated: boolean = false;
-        if (productUpdated) {
+        if (productCreated) {
             const url = `http://localhost:8000/api/products/images/create/`;
-            const ImagesToUpload = getImagesToUpload(data.images);
-
             
-            ImagesToUpload?.map(async (image) => {
+
+            let productImageCreated = false;
+            data.images?.map(async (image) => {
                 const ImageFormData = new FormData();
-                ImageFormData.append("product",product.id.toString())
+                ImageFormData.append("product",product_id.toString())
                 ImageFormData.append("image",image)
-                productImageUpdated = await productImageCreate(url,ImageFormData);
-                
+                productImageCreated = await productImageCreate(url,ImageFormData);
             })
-            if (productImageUpdated){
-                toast({
-                    variant: "green",
-                    description: "Product has been changed successfully.",
-                    duration: 3000,
-                });
-                
-            }
+            
         }
-    };
+    }
+
 
   return (
-    <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-            <DialogTitle>Edit Product</DialogTitle>
-            <DialogDescription>
-                Make changes to your product here. Click save when you're done.
-            </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
+    <Dialog>
+        <DialogTrigger className="w-full bg-green-50 grid place-items-center min-h-56 rounded-xl border">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+                <DialogTitle>Add Product</DialogTitle>
+                <DialogDescription>
+                    Create your product here. Click save when you're done.
+                </DialogDescription>
+            </DialogHeader>
+            <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3">
                 <Tabs defaultValue="details" className="min-h-full">
                     <TabsList className="grid grid-cols-2">
@@ -300,9 +263,6 @@ function InventoryProductItemEditForm({product}: Props) {
                                     className="mt-4 border mx-auto w-36 h-36 object-cover"
                                     priority
                                     />
-                                    
-
-                                    <InventoryProductItemEditFormDeleteImageButton product={product} index={index} />
                                 </div>
 
                             ))}
@@ -333,13 +293,16 @@ function InventoryProductItemEditForm({product}: Props) {
                                 />
                         </TabsContent>
                     <DialogFooter>
-                        <Button type="submit" className="mt-5">Save changes</Button>
+                        <Button type="submit" className="mt-5">Save</Button>
                     </DialogFooter>
                 </Tabs>
             </form>
         </Form>
-    </DialogContent>
+
+            
+        </DialogContent>
+    </Dialog>
   )
 }
 
-export default InventoryProductItemEditForm
+export default InventoryCatalogAddProduct

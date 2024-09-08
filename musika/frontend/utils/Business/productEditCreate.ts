@@ -2,25 +2,35 @@ import { toast } from "@/components/ui/use-toast";
 
 
 
-async function productEditCreate(url: string, data: FormData, edit: boolean) : Promise<boolean> {
+async function productEditCreate(data: FormData, edit: boolean) : Promise<[number,boolean]> {
     
+    const url = edit ? 
+    'http://localhost:8000/api/products/update/': 
+    'http://localhost:8000/api/products/create/';
+
     const response = await fetch(url, {
         method: edit ? "PUT": "POST",
         body: data,
     });
 
+    const responseData = await response.json();
     if (!response.ok) {
-        const errorData = await response.json();
         toast({
             variant: "destructive",
-            description: errorData.detail,
+            description: responseData.detail,
             duration: 1500,
         })
     }
 
 
+    if (edit){
+        return [1,response.ok];
+    }
 
-    return response.ok;
+    const product_id = responseData?.id
+    const productCreated = response.ok
+
+    return [product_id,productCreated]
 
 }
 
