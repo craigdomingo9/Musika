@@ -26,15 +26,43 @@ class BusinessCreateSerializer(serializers.ModelSerializer):
         else:
             return False
 
+class FeatureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Feature
+        fields = ['id', 'name', 'description']
+
+
+class SubscriptionPlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubscriptionPlan
+        fields = ['id', 'name', 'features']
+
 class SubscriptionsSerializer(serializers.ModelSerializer):
+    missing_features = serializers.SerializerMethodField()
+    next_plan = serializers.SerializerMethodField()
 
     class Meta:
         model = Subscription
-        fields = ['id', 'plan', 'interval', 'payment_amount', 'status']
+        fields = ['id', 'plan', 'interval', 'payment_amount', 'status','missing_features','next_plan']
         depth = 2
 
     def get_is_active(self, obj):
         return obj.status
+    
+    def get_missing_features(self, obj):
+        next_plan = obj.next_plan
+        if next_plan:
+            current_features = obj.plan.features.all()
+            missing = next_plan.features.exclude(id__in=current_features)
+            return FeatureSerializer(missing, many=True).data
+        return []
+    
+    def get_next_plan(self, obj):
+        next_plan = obj.next_plan
+        if next_plan:
+            return SubscriptionPlanSerializer(next_plan).data
+        return None
+
 
 class LocationSerializer(serializers.ModelSerializer):
 

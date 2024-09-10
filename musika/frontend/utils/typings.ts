@@ -133,7 +133,9 @@ type BusinessSubscription = {
     plan: Plan,
     interval: string,
     payment_amount: string,
-    status: SubscriptionStatus
+    status: SubscriptionStatus,
+    missing_features: Feature[],
+    next_plan: Plan
 }
 
 type SubscriptionStatus = {

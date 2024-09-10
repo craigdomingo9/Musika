@@ -81,6 +81,28 @@ class Subscription(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
+    def missing_features(self):
+        all_features = Feature.objects.all()
+        current_features = self.plan.features.all()
+        missing = all_features.exclude(id__in=current_features)
+
+        return missing
+    
+    @property
+    def next_plan(self):
+        # Get all plans, exclude the current plan
+        plans = SubscriptionPlan.objects.exclude(id=self.plan.id).order_by('price')
+        
+        # Find the next plan based on price
+        next_plan = None
+        for plan in plans:
+            if plan.price > self.plan.price:
+                next_plan = plan
+                break
+        
+        return next_plan
+    
+    @property
     def is_active(self):
         return self.end_date is not None and timezone.now().date() <= self.end_date
     
@@ -135,3 +157,4 @@ class SubscriptionPlan(models.Model):
 
     def __str__(self):
         return self.name
+    
