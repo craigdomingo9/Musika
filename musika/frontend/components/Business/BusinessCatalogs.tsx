@@ -10,7 +10,7 @@ type Props = {
 
 async function BusinessCatalogs({business}: Props) {
 
-    const url : string = `http://localhost:8000/api/products/catalogs/business/${business}`
+    const url : string = `http://localhost:8000/api/products/catalogs/b/${business}`
 
     const options: RequestInit = {
         method: "GET",
@@ -22,6 +22,8 @@ async function BusinessCatalogs({business}: Props) {
         }
     }
     const response = await fetch(url,options);
+
+    console.log(response)
     const business_catalogs = (await response.json()) as Catalog[];
 
 

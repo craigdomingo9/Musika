@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useState } from 'react';
 import DashboardBusinessInfo from './DashboardBusinessInfo'
-import DashboardBusinessSubscription from './DashboardBusinessSubscription'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import Inventory from '../Inventory/Inventory';
+import Subscriptions from '../Subscriptions/Subscriptions';
+import BusinessSubscription from '../Subscriptions/BusinessSubscription';
 
 
 type Props = {
@@ -41,7 +42,7 @@ function Dashboard({page}: Props) {
                 </TabsList>
             </div>
             <TabsContent value="home">
-                <DashboardBusinessSubscription />
+                <BusinessSubscription extensive={false}/>
             </TabsContent>
             <TabsContent value="analytics">
                 Analytics
@@ -50,7 +51,7 @@ function Dashboard({page}: Props) {
                 <Inventory />
             </TabsContent>
             <TabsContent value="subscriptions">
-                Subscriptions
+                <Subscriptions />
             </TabsContent>
             <TabsContent value="profile">
                 Profile

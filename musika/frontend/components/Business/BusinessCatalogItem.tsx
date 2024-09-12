@@ -11,6 +11,7 @@ type Props = {
 function BusinessCatalogItem({catalog}: Props) {
     const base_url : string = "http://localhost:8000";
 
+
   return (
     <Link href={{
         pathname: "/catalog",
