@@ -58,6 +58,8 @@ class LoginView(ObtainAuthToken):
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
+        print(email)
+        
         
         try:
             user = Credentials.objects.get(email=email)

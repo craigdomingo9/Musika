@@ -1,8 +1,7 @@
 import variables from "@/utils/variables";
-import ProductDetailsMainContent from "./ProductDetailsMainContent";
 import SimilarProducts from "./SimilarProducts";
 import ProductDetailsAddCurrentProduct from "@/utils/ProductDetails/ProductDetailsAddCurrentProduct";
-import ProductDetailsSplit from "@/utils/ProductDetails/ProductDetailsSplit";
+import ProductDetails from "./ProductDetails";
   
 
 type Props = {
@@ -28,34 +27,18 @@ async function ProductDetailsMain({id}: Props) {
 
 
     const response = await fetch(url,options);
-    const data = (await response.json());
-
-
-
-    const [
-      current_product,
-      images,
-      global_product_details,
-      product_details,
-      business_details,
-      catalog_details
-    ] = ProductDetailsSplit(data);
-
-
+    const product = (await response.json()) as Product;
+    console.log(product)
 
     return (
-      <>  
-          <ProductDetailsAddCurrentProduct product_details={current_product} />
-          <ProductDetailsMainContent 
-            images={images}
-            global_product_details={global_product_details}
-            product_details={product_details}
-            business_details={business_details}
-            catalog_details={catalog_details}
-          />
-          <SimilarProducts id={id} category={data["catalog"]["category"]} />
-          
-      </>
+        <>  
+            <ProductDetailsAddCurrentProduct product={product} />
+            <ProductDetails product={product} />
+            
+            {product && 
+                <SimilarProducts id={product.id} /> 
+            }
+        </>
     )
 }
 

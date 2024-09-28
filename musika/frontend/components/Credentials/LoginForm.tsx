@@ -17,6 +17,8 @@ import Cookies from 'js-cookie';
 import { toast } from "../ui/use-toast";
 import { verifyToken } from "@/middleware/auth";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { CheckIcon, Loader2 } from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -35,49 +37,55 @@ function LoginForm() {
           password: ""
         },
     })
+
+    const [loadingState, setLoadingState] = useState<string>();
     const router = useRouter()
     
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        try {
-            const url = "http://localhost:8000/auth/login/";
-            const options: RequestInit = {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values),
-            }
-            const response = await fetch(url, options);
+        setLoadingState("running");
+        const formData = new FormData();
+        formData.append('email', values.email);
+        formData.append('password',values.password);
+        
+        const url = "http://localhost:8000/auth/login/";
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                accept: "application/json"
+            },
+            body: formData,
+        });
+        
 
 
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                toast({
-                    variant: "destructive",
-                    description: errorData.detail,
-                    duration: 1500,
-                })
-                throw new Error(errorData.detail || 'Login failed');
-                
-            }
-
-            const responseData = await response.json();
-
-            Cookies.set('token', responseData.key, { expires: 7 });
-            Cookies.set('email', responseData.email, { expires: 7 });
-
+        if (!response.ok) {
+            const errorData = await response.json();
             toast({
-                variant: "green",
-                description: "Logged in successfully",
+                variant: "destructive",
+                description: errorData.detail,
                 duration: 1500,
             })
-
-            verifyToken(router);
-            // Save the token or redirect user as needed
-        } catch (error: any) {
-            console.error('Error:', error.message);
+            throw new Error(errorData.detail || 'Login failed');
+            
         }
+
+        const responseData = await response.json();
+
+        Cookies.set('token', responseData.key, { expires: 7 });
+        Cookies.set('email', responseData.email, { expires: 7 });
+
+        setLoadingState("complete");
+        toast({
+            variant: "green",
+            description: "Logged in successfully",
+            duration: 3000,
+        })
+
+        setTimeout(() => {
+            verifyToken(router);
+        }, 1000);
+        // Save the token or redirect user as needed
     }
 
     return (
@@ -92,13 +100,12 @@ function LoginForm() {
                     name="email"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                            <Input placeholder="example@example.com" autoComplete="true" {...field} />
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input placeholder="example@example.com" className="text-sm" autoComplete="true" {...field} />
+                            </FormControl>
+                            <FormMessage />
                         </FormItem>
-                        
                     )}
                     />
                     <FormField
@@ -106,16 +113,21 @@ function LoginForm() {
                     name="password"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                            <Input placeholder="********" autoComplete="true" type="password" {...field} />
-                        </FormControl>
-                        <FormMessage />
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input placeholder="********" autoComplete="true" className="text-sm" type="password" {...field} />
+                            </FormControl>
+                            <FormMessage />
                         </FormItem>
                         
                     )}
                     />
-                    <Button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit">Submit</Button>
+                    <Button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" type="submit">
+                        
+                        {!loadingState && "Login"}
+                        {loadingState == "running" && <Loader2 className="mr-2 h-4 w-4 animate-spin transition-transform" />}
+                        {loadingState == "complete" && <CheckIcon className="transition-transform animate-bounce" />}
+                    </Button>
                 </form>
                 <p className="text-xs my-2">
                     Don't have an account.&nbsp;

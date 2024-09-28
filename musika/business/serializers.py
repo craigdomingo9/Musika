@@ -26,6 +26,14 @@ class BusinessCreateSerializer(serializers.ModelSerializer):
         else:
             return False
 
+class BusinessUpdateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Business
+        fields = ["name","description","logo"]
+    
+
+
 class FeatureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature

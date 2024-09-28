@@ -25,6 +25,7 @@ async function BusinessMainContent({business,business_locations}: Props) {
     const response = await fetch(url,options);
     const business_products = (await response.json()) as Product[];
 
+
   return (
     <header className=" min-w-full justify-center">
         <Tabs className="min-w-full grid items-center" defaultValue="products">

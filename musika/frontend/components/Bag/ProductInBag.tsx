@@ -10,13 +10,14 @@ type Props = {
 }
 
 function ProductInBag({product}: Props) {
+  const base_url = "http://localhost:8000";
 
   const { addItem, decreaseItemQuantity, getTotalPrice } = useBagStore();
 
   return (
     <div className="flex min-w-full border-2 border-slate-100 border-opacity-80 p-2 my-4 h-40 rounded-xl">
       <div className="w-[40vw] sm:w-[15vw] xl:w-[15vw] max-h-full grid">
-        <Image src={product.image} className="max-h-full object-fit rounded-md my-auto" width={140} height={140} alt="Bag Product" />
+        <Image src={`${base_url}${product.image}`} className="max-h-full object-fit rounded-md my-auto" width={140} height={140} alt="Bag Product" />
       </div>
       <div className="grid grid-rows-2 w-[50vw] relative">
         <Link href={{

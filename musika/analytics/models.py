@@ -37,6 +37,10 @@ class ProductAnalytics(models.Model):
     
     def __str__(self) -> str:
         return f"Analytics for {self.product.name}"
+    
+    @property
+    def product_details(self):
+        return Product.objects.get(id=self.product.id)
 
 
 class ProductViews(models.Model):

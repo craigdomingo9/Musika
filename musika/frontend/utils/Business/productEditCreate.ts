@@ -5,8 +5,10 @@ import { toast } from "@/components/ui/use-toast";
 async function productEditCreate(data: FormData, edit: boolean) : Promise<[number,boolean]> {
     
     const url = edit ? 
-    'http://localhost:8000/api/products/update/': 
+    `http://localhost:8000/api/products/update/${data.get("id")}/`: 
     'http://localhost:8000/api/products/create/';
+
+    console.log("yeah")
 
     const response = await fetch(url, {
         method: edit ? "PUT": "POST",

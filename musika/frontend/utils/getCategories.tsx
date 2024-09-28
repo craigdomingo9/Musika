@@ -1,7 +1,7 @@
 import variables from "./variables";
 
 async function getCategories<T>() : Promise<T> {
-    const url = "http://localhost:8000/api/category/";
+    const url = "http://localhost:8000/api/products/category/";
 
     const options: RequestInit = {
         method: "GET",

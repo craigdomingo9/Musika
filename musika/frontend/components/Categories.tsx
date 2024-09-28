@@ -1,35 +1,41 @@
-"use client";
 import variables from "@/utils/variables";
 import CategoryItems from "./CategoryItems";
-import getCategories from "@/utils/getCategories";
-import { useEffect, useState } from "react";
 
 type Props = {
     name: string
 }
 
 
-function Categories({name}: Props) {
+async function Categories({name}: Props) {
+    let categories: Category[] = [];
+    try {
+        const url = "http://localhost:8000/api/products/category/";
 
-    const [data, setData] = useState<Category[]>([]);
-    
-    useEffect(() => {
-        const loadCategories = async () => {
-            try {
-                const categories = await getCategories<Category[]>();
-                setData(categories)
-            }
-            catch (error) {
-                console.log(error)
+        const options: RequestInit = {
+            method: "GET",
+            headers: {
+                accept: "application/json"
+            },
+            next:{
+                revalidate: variables.caching.categories,
             }
         }
-        loadCategories()
-    },[])
+
+        const response = await fetch(url,options);
+
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+        categories = await response.json();
+    }
+    catch (error) {
+        console.log(error)
+    }
 
     return (
     <div>
         <div className="flex sm:mx-[5%] overflow-x-scroll overflow-y-hidden pl-4 sm:pl-0">
-            <CategoryItems categories={data} name={name}/>
+            <CategoryItems categories={categories} name={name}/>
         </div>
     </div>
     )

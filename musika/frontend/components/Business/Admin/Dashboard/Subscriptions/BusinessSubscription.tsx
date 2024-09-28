@@ -44,7 +44,6 @@ function BusinessSubscription({extensive}: Props) {
         loadSubscription()
     },[])
     
-
   return (
     <div className="pt-2 pl-2 grid">
         {businessSubscription ? (

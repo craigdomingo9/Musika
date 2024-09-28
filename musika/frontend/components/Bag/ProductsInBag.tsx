@@ -34,7 +34,7 @@ function ProductsInBag() {
         <p className="text-sm font-semibold">Review the items in your bag and checkout when ready</p>
         
       </div>
-      <div className="grid grid-cols-1 last:mb-28 min-h-[65vh] sm:min-h-[40vh]">
+      <div className="grid grid-cols-1 last:mb-28 min-h-[20vh] sm:min-h-[40vh]">
         {bagWeight ? products.map((product) => (
           <ProductInBag key={product.id} product={product} />
         )):(

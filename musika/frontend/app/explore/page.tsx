@@ -13,9 +13,9 @@ async function ExplorePage({searchParams : { category }}: Props) {
 
   let url;
   if (category == undefined) {
-    url = "http://localhost:8000/api/products/sale=0&homepage=0";
+    url = "http://localhost:8000/api/products/explore/";
   }else{
-    url = `http://localhost:8000/api/products/category/${category}/`;
+    url = `http://localhost:8000/api/products/explore/${category}/`;
   }
 
   const options: RequestInit = {
@@ -37,7 +37,7 @@ async function ExplorePage({searchParams : { category }}: Props) {
         <Header />
         <Categories name={category} />
         <h1 className="text-2xl font-bold pl-4 pb-2 sm:mx-[10%]">{category==undefined ? "Explore": `Explore: ${category}`}</h1>
-        <div className=" sm:mx-[10%]">
+        <div className=" sm:mx-[10%] ">
           <ExploreProductItems products={data} />
         </div>
     </div>

@@ -4,13 +4,12 @@ import { ChevronRightCircle } from "lucide-react";
 
 type Props = {
     id: number,
-    category: number,
 }
 
 
-async function SimilarProducts({id, category} : Props) {
+async function SimilarProducts({id} : Props) {
     
-    const url = `http://localhost:8000/api/products/similar-products/id=${id}&category=${category}`;
+    const url = `http://localhost:8000/api/products/similar/${id}/`;
 
     const options: RequestInit = {
         method: "GET",
@@ -24,6 +23,7 @@ async function SimilarProducts({id, category} : Props) {
 
     const response = await fetch(url,options);
     const data = (await response.json()) as Product[];
+
 
   return (
     <div className="pt-2 mb-[5rem] sm:mt-5 relative">

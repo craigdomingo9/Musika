@@ -39,6 +39,31 @@ class BusinessCreateView(APIView):
             return Response({"detail": "Invalid request"},status=status.HTTP_400_BAD_REQUEST)
 
 
+class BusinessesUpdateView(APIView):
+    queryset = Business.objects.all()
+    serializer_class = BusinessUpdateSerializer
+    
+    def put(self, request,**kwargs):
+        data = request.data
+        
+        business = Business.objects.get(pk=kwargs["pk"])
+        
+        if not business:
+            return Response({"error": "Profile not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(business, data=request.data, partial=True)
+        
+        if serializer.is_valid():
+            print("-------------------------")
+            serializer.save()
+            return Response({"detail": "Profile was updated successfully."}, status=status.HTTP_200_OK)
+        else:
+            print(serializer.errors)
+            return Response({"detail": "Profile update failed!."}, status=status.HTTP_400_BAD_REQUEST)
+        
+    
+
+
 
 class BusinessesRetrieveUpdateView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Business.objects.all()

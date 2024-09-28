@@ -1,7 +1,8 @@
 type Category = {
-    id: number;
-    name: string;
-    image: string;
+    id: number,
+    name: string,
+    image: string,
+    has_products: boolean,
 }
 
 
@@ -77,6 +78,7 @@ type Product = {
     name: string,
     catalog: Catalog,
     business: Business,
+    category: Category,
     images: ProductImage[],
     variant: ProductVariant[],
     description: string,
@@ -119,6 +121,8 @@ type CurrentProduct = {
 type Profile = {
     address: string,
     city: string,
+    age: string,
+    gender: string,
     country: string,
     credentials: string,
     date_of_birth: null | string,
@@ -158,4 +162,86 @@ type Feature = {
     name: string,
     description: string,
 }
+
+type BusinessPageAnalytics = {
+    business_page_views: BusinessPageView[];
+}
+
+
+type BusinessPageView = {
+    id: number,
+    view_date: string,
+    profile: AnalyticsProfileView,
+}
+
+type AnalyticsProfileView = {
+    credentials: string,
+    age: string,
+    gender: string,
+    city: string,
+}
+
+type PageViewsChartData = {
+    date: string,
+    views: number,
+}
+
+type PageVisitorsBySexChartData = {
+    gender: string,
+    frequency: number,
+}
+
+type AgeChartData = {
+    age: string,
+    frequency: number,
+}
+
+type CityChartData = {
+    city: string,
+    frequency: number,
+}
+
+type ProductAnalyticsProducts = {
+    product_analytics: ProductAnalytics[]
+}
+
+type ProductAnalytics = {
+    product: number,
+    product_details: AnalyticsProductDetails,
+    product_views: AnalyticsProductViews[],
+    product_bag_adds: AnalyticsProductAdds[],
+}
+
+type AnalyticsProductDetails = {
+    id: number,
+    name: string,
+    catalog: Catalog,
+    category: Category,
+    images: ProductImage[],
+}
+
+type AnalyticsProductViews = {
+    id: number,
+    product: number,
+    profile: string,
+    view_date: string,
+}
+
+type AnalyticsProductAdds = {
+    id: number,
+    product: number,
+    bag_add_date: string,
+}
+
+
+type Instance = {
+    [key: string]: number | string
+}
+
+
+type Measure = {
+    value: string,
+    name: string,
+}
+
 

@@ -1,7 +1,7 @@
 
 
 async function getCatalogProducts(catalog: number) {
-    const url = `http://localhost:8000/api/products/catalog/${catalog}`;
+    const url = `http://localhost:8000/api/products/catalog/${catalog}/`;
 
     const options: RequestInit = {
         method: "GET",

@@ -2,6 +2,17 @@ from rest_framework import serializers
 from .models import *
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["id","name","description","image","has_products"]
+    
+    def get_has_products(self,obj):
+        return obj.has_products
+
+
+
 class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -21,6 +32,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ["name","catalog","category","business","description","price","on_sale","sale_price","inventory_quantity"]
+    
 
 class ProductImageSerializer(serializers.ModelSerializer):
 
@@ -35,12 +47,13 @@ class ProductImageCreateSerializer(serializers.ModelSerializer):
         fields = ['product','image']
     
 
-class ProductsSerializer(serializers.ModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id","name","catalog","business","images","variant","description","price","on_sale","sale_price","inventory_quantity","created_at"]
+        fields = ["id","name","catalog","business","category","images","variant","description","price","on_sale","sale_price","inventory_quantity","created_at"]
         depth = 1
+
 
 class ProductUpdateSerializer(serializers.ModelSerializer):
 
@@ -49,19 +62,6 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
         fields = ["id","name","description","price","on_sale","sale_price","inventory_quantity"]
 
 
-class ProductsByCatalogSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = ["id","name","images","variant","description","price","on_sale","sale_price","inventory_quantity"]
-        depth = 1
-
-class BusinessProductsSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = ["id","name","images","description","price","on_sale","sale_price","inventory_quantity","created_at"]
-        depth = 1
 
 
 class ProductVariantSerializer(serializers.ModelSerializer):

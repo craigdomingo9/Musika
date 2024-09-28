@@ -37,6 +37,9 @@ class ProfileCreateView(APIView):
         else:
             return Response({"detail": "Profile was not created."}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
+
 class ProfileUpdateView(APIView):
     def put(self, request):
         email = request.data.get("credentials")
@@ -59,7 +62,7 @@ class ProfileUpdateView(APIView):
             return Response({"detail": "Profile was updated successfully."}, status=status.HTTP_200_OK)
         else:
             print(serializer.errors)
-            return Response({"detail": "profile update failed!."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "Profile update failed!."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 

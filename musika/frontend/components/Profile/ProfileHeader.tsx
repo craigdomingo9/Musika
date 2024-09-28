@@ -2,24 +2,14 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { useRouter } from "next/navigation";
-import { toast } from "../ui/use-toast";
-import Cookies from "js-cookie";
+import logout from "@/utils/Credentials/logout";
 
 function ProfileHeader() {
 
   const router = useRouter();
 
-  function logout() {
-    Cookies.remove("token");
-    Cookies.remove("email");
-    Cookies.remove("email");
-    Cookies.remove("business_code");
-    Cookies.remove("business_email");
-    toast({
-        variant: "green",
-        description: "Logged out sucessfully.",
-        duration: 3000,
-    })
+  function logoutfn() {
+    logout()
     router.push("/");
   }
 
@@ -30,7 +20,7 @@ function ProfileHeader() {
                 <h1 className="font-bold align-middle text-slate-600 my-auto">Musika</h1>
             </Link>
             <div className="mx-4">
-              <Button variant={"outline"} className="h-7 w-16 m-0 text-xs" onClick={logout}>Logout</Button>
+              <Button variant={"outline"} className="h-7 w-16 m-0 text-xs" onClick={logoutfn}>Logout</Button>
             </div>
         </div>
     </header>

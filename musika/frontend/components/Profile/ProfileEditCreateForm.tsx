@@ -31,6 +31,8 @@ type Props = {
 const profileEditCreateFormSchema = z.object({
     first_name: z.string().min(2).max(100),
     last_name: z.string().min(2).max(100),
+    gender: z.string().min(2).max(100),
+    age: z.string().min(1).max(3),
     phone_number: z.string()
     .min(10, { message: 'Phone number must be at least 10 digits' })
     .max(15, { message: 'Phone number must be at most 15 digits' })
@@ -54,6 +56,8 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
         defaultValues: {
             first_name: profile ? profile.first_name : "",
             last_name: profile ? profile.last_name : "",
+            gender: profile ? profile.gender : "",
+            age: profile ? profile.age : "",
             phone_number: profile ? profile.phone_number : "",
             address: profile ? profile.address : "",
             city: profile ? profile.city : "",
@@ -111,6 +115,8 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
         formData.append('last_name',data.last_name);
         formData.append('profile_picture',data.profile_picture);
         formData.append('phone_number',data.phone_number);
+        formData.append('age',data.age);
+        formData.append('gender',data.gender);
         formData.append('address',data.address);
         formData.append('city',data.city);
         formData.append(editProfile ? 'credentials':'email',email ? email : "");
@@ -197,6 +203,45 @@ function ProfileEditCreateForm({profile,editProfile}: Props) {
                             <FormLabel>Last Name</FormLabel>
                                 <FormControl>
                                     <Input className="text-sm" placeholder="Muchemwa" autoComplete="true" {...field} />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="age"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Age</FormLabel>
+                                <FormControl>
+                                    <Input className="text-sm" placeholder="18" autoComplete="true" {...field} />
+                                </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="gender"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Gender</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={(value) => {
+                                        field.onChange;
+                                        form.setValue("gender",value);
+                                    }}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder={profile?.gender ? profile.gender : "Choose your gender"} />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="Male">Male</SelectItem>
+                                            <SelectItem value="Female">Female</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 </FormControl>
                             <FormMessage />
                         </FormItem>

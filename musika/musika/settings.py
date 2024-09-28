@@ -54,11 +54,9 @@ INSTALLED_APPS = [
 
 
     'api',
-    
     'analytics',
     'authentications',
     'business',
-    "category",
     "products",
     "profiles"
 ]

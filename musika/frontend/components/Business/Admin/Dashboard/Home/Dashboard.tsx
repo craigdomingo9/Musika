@@ -7,6 +7,8 @@ import Cookies from 'js-cookie';
 import Inventory from '../Inventory/Inventory';
 import Subscriptions from '../Subscriptions/Subscriptions';
 import BusinessSubscription from '../Subscriptions/BusinessSubscription';
+import Profile from '../Profile/Profile';
+import Analytics from '../Analytics/Analytics';
 
 
 type Props = {
@@ -45,7 +47,7 @@ function Dashboard({page}: Props) {
                 <BusinessSubscription extensive={false}/>
             </TabsContent>
             <TabsContent value="analytics">
-                Analytics
+                <Analytics />
             </TabsContent>
             <TabsContent value="inventory">
                 <Inventory />
@@ -54,7 +56,7 @@ function Dashboard({page}: Props) {
                 <Subscriptions />
             </TabsContent>
             <TabsContent value="profile">
-                Profile
+                <Profile />
             </TabsContent>
         </Tabs>
         

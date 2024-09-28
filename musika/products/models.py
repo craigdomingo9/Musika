@@ -1,19 +1,35 @@
 from django.db import models
 from business.models import *
-from django.db.models import Func, FloatField
-from category.models import Category
+from .managers import ProductManager,CatalogManager
+
+
+
+
+
 # Create your models here.
 
 
+"""   Category   """
+class Category(models.Model):
+    name = models.CharField(max_length=50,blank=False)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='./images/categories',blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
-class SQLiteRandom(Func):
-    function = 'RAND'
-    output_field = FloatField()
-
-class ShuffleModelManager(models.Manager):
-    def shuffled(self):
-        return self.annotate(random_order=SQLiteRandom()).order_by('random_order')
+    class Meta:
+        ordering = ['name']
+        verbose_name_plural = "Categories"
+    
+    def __str__(self) -> str:
+        return self.name
+    
+    @property
+    def has_products(self):
+        has_products = Product.objects.filter(category=self.id).exists()
+        return has_products
+    
 
 
 """   Catalog   """
@@ -24,10 +40,11 @@ class Catalog(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    objects = CatalogManager()
 
     def __str__(self) -> str:
         return self.name
-
 
 
 """   Product   """
@@ -39,15 +56,17 @@ class Product(models.Model):
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     on_sale = models.BooleanField(default=False,blank=True)
+    is_featured = models.BooleanField(default=False,blank=True)
     sale_price = models.DecimalField(max_digits=10, decimal_places=2,blank=True,null=True)
     inventory_quantity = models.PositiveIntegerField(default=1,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = ShuffleModelManager()
+    objects = ProductManager()
 
     def __str__(self) -> str:
         return self.name
+    
 
 
 """   Product Image   """

@@ -5,7 +5,7 @@ async function getBusinessSubscription() {
     const businessCode = Cookies.get("business_code")
         
 
-    const url = `http://localhost:8000/api/business/subscriptions/${businessCode}`
+    const url = `http://localhost:8000/api/business/subscriptions/${businessCode}/`
 
     const options: RequestInit = {
         method: "GET",
@@ -18,6 +18,7 @@ async function getBusinessSubscription() {
     }
     const response = await fetch(url,options);
     const business_data = (await response.json()) as BusinessSubscription;
+
 
     return business_data;
 }

@@ -3,8 +3,7 @@ import { toast } from "@/components/ui/use-toast";
 async function productDelete(id: string, isDeleteImage: boolean) {
     const url = isDeleteImage ?
     `http://localhost:8000/api/products/images/delete/${id}/`:
-    `http://localhost:8000/api/products/${id}`
-    ;
+    `http://localhost:8000/api/products/delete/${id}/`;
 
     const response = await fetch(url, {
         method: "DELETE"

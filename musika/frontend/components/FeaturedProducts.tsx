@@ -3,7 +3,7 @@ import ProductItems from "./ProductItems";
 
 async function FeaturedProducts() {
 
-    const url = "http://localhost:8000/api/products/sale=0&homepage=1";
+    const url = "http://localhost:8000/api/products/featured/";
 
     const options: RequestInit = {
         method: "GET",
