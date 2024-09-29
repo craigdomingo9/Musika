@@ -1,5 +1,6 @@
 import AnalyticsCompareChart from './AnalyticsCompareChart';
 import AnalyticsCompareChartListAdd from './AnalyticsCompareChartListAdd';
+import AnalyticsCompareChartsRenderer from './AnalyticsCompareChartsRenderer';
 import AnalyticsCompareLineGraph from './AnalyticsCompareLineGraph';
 import AnalyticsCompareMeasureSelect from './AnalyticsCompareMeasureSelect';
 
@@ -17,8 +18,8 @@ function AnalyticsCompare({productAnalytics}: Props) {
         <AnalyticsCompareChartListAdd productAnalytics={productAnalytics} />
         
         <AnalyticsCompareMeasureSelect />
-        <AnalyticsCompareChart />
-        <AnalyticsCompareLineGraph />
+        <AnalyticsCompareChartsRenderer />
+        
     </div>
   )
 }

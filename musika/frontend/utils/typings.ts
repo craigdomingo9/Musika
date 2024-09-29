@@ -244,4 +244,8 @@ type Measure = {
     name: string,
 }
 
+interface DataPoint {
+    date: string;
+    [key: string]: any;
+}
 

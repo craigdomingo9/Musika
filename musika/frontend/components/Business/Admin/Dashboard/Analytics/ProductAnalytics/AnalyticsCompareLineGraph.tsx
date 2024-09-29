@@ -18,22 +18,21 @@ import {
 	} from "@/components/ui/chart";
 import useProductAnalyticsMeasureStore from "@/stores/ProductAnalyticsMeasureStore";
 import useActionStore from "@/stores/ActionStore";
-import fix_date from "@/utils/Analytics/fix_date";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { fix_date, makeCustomIdentifier } from "@/utils/Analytics/utils";
 
 
 
-interface DataPoint {
-    date: string;
-    [key: string]: any;
-  }
+
+type Props = {
+    analytics_instances: DataPoint[],
+    chartConfig: ChartConfig,
+    days: number,
+}
 
 
-function AnalyticsCompareLineGraph() {
-    const {instances} = useProductAnalyticsCompareListStore()
+function AnalyticsCompareLineGraph({analytics_instances,chartConfig,days}: Props) {
     const [analyticsCompareChartInstances, setAnalyticsCompareChartInstances] = useState<Instance[]>([])
-    const [analyticsCompareChartConfig, setAnalyticsCompareChartConfig] = useState<ChartConfig>({})
-    const [days, setDays] = useState<number>(30)
     const {measure} = useProductAnalyticsMeasureStore();
     const {secondaryActionOccured} = useActionStore()
     const [keys, setKeys] = useState<string[]>([])
@@ -41,69 +40,35 @@ function AnalyticsCompareLineGraph() {
     
     function calculateCumulative(data: DataPoint[]): DataPoint[] {
         let cumulative: { [key: string]: number } = {};
+        const copy = data.map((item) => ({...item}))
 
-        Object.keys(data[0]).forEach((key) => {
+        Object.keys(copy[0]).forEach((key) => {
             if (key !== "date") {
                 if (!keys.find((_key) => _key===key)) keys.push(key);
 
                 cumulative[key] = 0;
-                data.forEach((item) => {
+                copy.forEach((item) => {
                     cumulative[key] += item[key];
                     item[`${key}`] = cumulative[key];
                 });
             }
         });
-        return data;
+        return copy;
     }
 
-    const makeCustomIdentifier = (name: string) : string => {
-        return name.split(" ").join("_").toLowerCase()
-    }
-    
+
     useEffect(() => {
+        
+        // console.clear()
 
-        console.clear()
-        let analytics_instances: DataPoint[] = [];
-        for (let x=0;x<=days;x++){
-            const date = fix_date(days,x);
-            let analytics_instance: DataPoint = {date: ""};
-            
-            instances.map((instance) => {
-                if (measure.value === "views") {
-                    analytics_instance['date'] = date;
-                    analytics_instance[instance.product_details.name] = instance.product_views.find((view) => view.view_date === date) ? instance.product_views.length : 0
-                }
-                if (measure.value === "cart_adds") {
-                    analytics_instance['date'] = date;
-                    analytics_instance[instance.product_details.name] = instance.product_bag_adds.find((cart_add) => cart_add.bag_add_date === date) ? instance.product_bag_adds.length : 0
-                }
-            })
-            
-            analytics_instances.push(analytics_instance)
-        }
-
-        if (analytics_instances) {
+        if (analytics_instances.length > 0) {
             const cumulativeData = calculateCumulative(analytics_instances);
             setAnalyticsCompareChartInstances(cumulativeData);
         }
 
-        let _chartConfig: ChartConfig = {};
-        instances.map((instance,index) => {
-            _chartConfig[
-            makeCustomIdentifier(instance.product_details.name)
-            ] = {
-                label: instance.product_details.name,
-                color: `hsl(var(--chart-${index+1}))`
-            }
-        })
-        
-        setAnalyticsCompareChartConfig(
-            _chartConfig
-        )
-        
-    },[secondaryActionOccured])
+
+    },[secondaryActionOccured,analytics_instances])
     
-    console.log(keys)
 
     return (
         <div className="mb-20 mt-4">
@@ -115,7 +80,7 @@ function AnalyticsCompareLineGraph() {
                 </CardDescription>
                 <CardContent>
                     <ChartContainer
-                        config={analyticsCompareChartConfig}
+                        config={chartConfig}
                         className="aspect-auto h-[300px] w-full"
                         >
                         <LineChart

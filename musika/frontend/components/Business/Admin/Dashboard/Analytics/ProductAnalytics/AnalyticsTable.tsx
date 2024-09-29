@@ -21,8 +21,8 @@ function AnalyticsTable({productAnalytics}: Props) {
 
     useEffect(() => {
 
-        let views:number = 0;
-        let cart_adds:number = 0;
+        let views: number = 0;
+        let cart_adds: number = 0;
 
         productAnalytics.map((analytics_instance) => {
             views += analytics_instance.product_views.length

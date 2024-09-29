@@ -12,8 +12,8 @@ type Props = {
 }
 
 function AnalyticsCompareChartListAdd({productAnalytics}: Props) {
-    const {instances,addInstance,removeFromList} = useProductAnalyticsCompareListStore();
-    const {secondaryActionOccured,toggleSecondaryActionOccurred} = useActionStore();
+    const {instances, addInstance, removeFromList} = useProductAnalyticsCompareListStore();
+    const {secondaryActionOccured, toggleSecondaryActionOccurred} = useActionStore();
 
 
     function addInstanceToStore(instance: ProductAnalytics) {
@@ -32,8 +32,8 @@ function AnalyticsCompareChartListAdd({productAnalytics}: Props) {
             toast({
                 variant: "success",
                 description: "Compare List cannot be empty.",
-                duration: 1500,
-              })
+                duration: 2000,
+            })
             toggleSecondaryActionOccurred(!secondaryActionOccured);
         }
 
