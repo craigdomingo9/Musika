@@ -1,14 +1,20 @@
+"use client";
 import Image from "next/image";
 import BusinessDetailsDescription from "./BusinessDetailsDescription";
+import { useEffect } from "react";
+import getProfile from "@/utils/getProfile";
 
 type Props = {
     details: Business
 }
 
 function BusinessDetails({details}: Props) {
+
+
     
     return (
     <div className="w-full h-60 md:h-96">
+        
         <div className="grid grid-cols-2 h-full overflow-clip">
             <div className="m-auto">
                 {details?.logo ? (

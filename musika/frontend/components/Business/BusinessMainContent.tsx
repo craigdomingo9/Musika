@@ -3,6 +3,7 @@ import ProductItems from "../ProductItems"
 import variables from "@/utils/variables"
 import BusinessCatalogs from "./BusinessCatalogs"
 import BusinessLocation from "./BusinessLocation"
+import BusinessPageViewLogic from "./BusinessPageViewLogic"
 
 type Props = {
     business: string,
@@ -24,10 +25,12 @@ async function BusinessMainContent({business,business_locations}: Props) {
     }
     const response = await fetch(url,options);
     const business_products = (await response.json()) as Product[];
+    
 
 
   return (
     <header className=" min-w-full justify-center">
+        <BusinessPageViewLogic business={business} />
         <Tabs className="min-w-full grid items-center" defaultValue="products">
             <TabsList className="grid grid-cols-3 sticky top-16 z-50 mb-4">
                 <TabsTrigger value="products">Products</TabsTrigger>

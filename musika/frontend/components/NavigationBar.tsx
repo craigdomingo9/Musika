@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import ProfileIcon from './Navigation/ProfileIcon';
 import Cookies from "js-cookie";
+import useActionStore from '@/stores/ActionStore';
 
 
 function NavigationBar() {
 
     let [homeActive, exploreActive, bagActive, profileActive] = navigators();
+    const {tertiaryActionOccured} = useActionStore();
 
     const products = useBagStore((state) => state.getTotalItems());
     const [count, setCount] = useState(0);
@@ -18,11 +20,11 @@ function NavigationBar() {
     useEffect(() => {
         setBusinessCode(Cookies?.get("business_code"));
         setCount(products);
-    },[businessCode,products])
+    },[businessCode,products,tertiaryActionOccured])
 
   return (
-    <div className="fixed sm:sticky sm:h-[80vh] sm:top-[10%] z-50 bottom-0 left-0 w-full shadow-top bg-white">
-        <div className="grid grid-cols-4 py-3 sm:grid-cols-1 sm:flex sm:h-screen sm:flex-col sm:justify-start overflow-hidden">
+    <div className="fixed max-h-14 sm:sticky h-16 sm:h-[80vh] sm:top-[10%] z-50 bottom-0 left-0 w-full shadow-top bg-white">
+        <div className="grid grid-cols-4 py-1 sm:grid-cols-1 sm:flex sm:h-screen sm:flex-col sm:justify-start overflow-hidden">
         <Link href={"/"} className="grid sm:py-4 items-center text-center text-gray-600 hover:text-gray-800">
             <div className='text-center flex w-full justify-center'>
 

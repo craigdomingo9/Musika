@@ -25,10 +25,7 @@ export default function RootLayout({
           <div>
             {children}
           </div>
-          <div className="hidden md:block">
-
-          </div>
-          
+          <div className="hidden md:block"></div>
         </main>
         <Toaster />
         </body>

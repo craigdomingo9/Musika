@@ -1,4 +1,5 @@
 "use client";
+import useActionStore from "@/stores/ActionStore";
 import getProfile from "@/utils/getProfile";
 import Cookies from "js-cookie";
 import Image from "next/image";
@@ -14,6 +15,7 @@ function ProfileIcon({active}: Props) {
     const [profile, setProfile] = useState<Profile | undefined>(undefined)
     const [profileNotFound, setProfileNotFound] = useState<boolean>(false)
     const [businessCode, setBusinessCode] = useState<string>()
+    const {tertiaryActionOccured,toggleTertiaryActionOccurred} = useActionStore();
 
     useEffect(() => {
         setBusinessCode(Cookies?.get("business_code"));
@@ -28,7 +30,7 @@ function ProfileIcon({active}: Props) {
             }
         }
         loadProfile()
-    },[businessCode])
+    },[businessCode,tertiaryActionOccured])
 
   return (
     <div className='text-center flex w-full justify-center'>

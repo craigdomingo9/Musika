@@ -23,7 +23,6 @@ async function BusinessCatalogs({business}: Props) {
     }
     const response = await fetch(url,options);
 
-    console.log(response)
     const business_catalogs = (await response.json()) as Catalog[];
 
 

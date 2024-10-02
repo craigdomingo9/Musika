@@ -3,9 +3,36 @@ from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics,status
-
+from django.db.models import Q
+from analytics.models import ProductAnalytics
 
 # Create your views here.
+
+
+class ItemSearchView(APIView):
+    serializer_class = ProductSerializer
+
+    def get(self,request):
+        query = request.query_params.get('q', None)
+        keywords = query.split()
+        filters = models.Q()
+
+        for keyword in keywords:
+            filters |= models.Q(description__icontains=keyword) | models.Q(name__icontains=keyword) | models.Q(category__name__icontains=keyword) | models.Q(catalog__name__icontains=keyword) | models.Q(business__name__icontains=keyword) | models.Q(business__description__icontains=keyword)
+                
+            
+            
+            return Response(
+                ProductSerializer(
+                    Product.objects.filter(filters),
+                    many=True
+                ).data
+            )
+
+
+
+
+
 class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
@@ -142,6 +169,7 @@ class ProductCreateView(APIView):
 
         if serializer.is_valid():
             product = serializer.save()
+            ProductAnalytics.objects.create(product=product)
             return Response({"id":product.id,"detail": "Product was created successfully."}, status=status.HTTP_200_OK)
         else:
             return Response({"detail": "Failed to create product. Try Again."}, status=status.HTTP_400_BAD_REQUEST)
@@ -165,5 +193,7 @@ class ProductImageCreateView(generics.CreateAPIView):
 class ProductImageDeleteView(generics.DestroyAPIView):
     queryset = ProductImage
     serializer_class = ProductImageSerializer
+
+
 
 

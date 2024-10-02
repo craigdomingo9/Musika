@@ -3,6 +3,8 @@ from .serializers import *
 from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from analytics.models import BusinessAnalytics
+
 
 # Create your views here.
 class BusinessesListCreateView(generics.ListCreateAPIView):
@@ -14,20 +16,20 @@ class BusinessCreateView(APIView):
     serializer_class = BusinessCreateSerializer
 
     def post(self,request):
-        serializer = self.serializer_class(data=request.data)
         data = request.data
+        serializer = self.serializer_class(data=data)
 
-        print(data)
 
         if serializer.is_valid():
-            business = Business.objects.create(
-                name=data["name"],
-                description=data["description"],
-                categories=data["categories"],
-                logo=data["logo"],
-                phone_number=data["phone_number"],
-                email=data["email"],
+            business = serializer.save()
+            Subscription.objects.create(
+                business=business,
+                plan=SubscriptionPlan.objects.get(name="Basic"),
+                interval="quarterly",
             )
+            BusinessAnalytics.objects.create(business=business)
+            
+            
             response = Response({
                 "detail":"Business was created successfully.",
                 "business_code":business.code,
@@ -36,7 +38,8 @@ class BusinessCreateView(APIView):
                 status=status.HTTP_201_CREATED)
             return response
         else:
-            return Response({"detail": "Invalid request"},status=status.HTTP_400_BAD_REQUEST)
+            print(serializer.errors)
+            return Response({"detail": "Invalid request. Please try again."},status=status.HTTP_400_BAD_REQUEST)
 
 
 class BusinessesUpdateView(APIView):

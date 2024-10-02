@@ -25,7 +25,6 @@ function ProductItems({products,row,page}: ProductItemsProps) {
           pathname: "/product",
           query: {
             id: product.id,
-            on_sale: product.on_sale ? 1 : 0,
           }
         }} key={product.id}>
           

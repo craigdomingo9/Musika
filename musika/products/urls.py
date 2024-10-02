@@ -14,7 +14,7 @@ urlpatterns = [
     path("similar/<int:id>/",SimilarProductsListView.as_view()),
     path("explore/",ExploreProductsListView.as_view()),
     path("explore/<str:category>/",ExploreProductsByCategoryListView.as_view()),
-
+    path('search/', ItemSearchView.as_view(), name='item-search'),
 
 
     path("b/<str:business>/", BusinessProductsListView.as_view()),

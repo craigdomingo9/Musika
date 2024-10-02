@@ -1,25 +1,20 @@
-import ProductDetailsHeader from "@/components/ProductDetails/ProductDetailsHeader"
-import ProductDetailsMain from "@/components/ProductDetails/ProductDetailsMain"
-
+import ProductDetailsHeader from "@/components/ProductDetails/ProductDetailsHeader";
+import ProductDetailsMain from "@/components/ProductDetails/ProductDetailsMain";
 
 type Props = {
-  searchParams: {
-    id: number,
-    onsale: boolean,
-    category: string,
-  }
+    searchParams: {
+        id: number;
+    };
+};
+
+async function ProductDetails({ searchParams: { id } }: Props) {
+
+    return (
+        <div className="sm:w-[40rem] xl:w-[47rem] sm:mx-auto">
+            <ProductDetailsHeader />
+            <ProductDetailsMain id={id} />
+        </div>
+    );
 }
 
-
-async function ProductDetails({searchParams: {id, onsale, category}} : Props) {
-  
-  return (
-    <div className="sm:w-[40rem] xl:w-[47rem] sm:mx-auto">
-        <ProductDetailsHeader />
-        <ProductDetailsMain id={id} />
-        
-    </div>
-  )
-}
-
-export default ProductDetails
+export default ProductDetails;

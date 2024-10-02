@@ -105,14 +105,23 @@ function InventoryProductItemEditForm({product}: Props) {
     },[product,actionOccurred])
 
 
-    const editQuantity = (action: string) => {
-        if (action == "increment") {
-            form.setValue("inventory_quantity",(form.getValues("inventory_quantity")+1))
+    const editQuantity = (action: "increment" | "decrement") => {
+        const currentQuantity = form.getValues("inventory_quantity");
+    
+        if (action === "increment") {
+            form.setValue("inventory_quantity", currentQuantity + 1);
+        } else if (action === "decrement") {
+            if (currentQuantity > 0) {
+                form.setValue("inventory_quantity", currentQuantity - 1);
+            } else {
+                toast({
+                    variant: "warning",
+                    description: "Quantity cannot be less than zero.",
+                    duration: 3000,
+                });
+            }
         }
-        if (action == "decrement") {
-            form.setValue("inventory_quantity",(form.getValues("inventory_quantity")-1))
-        }
-    }
+    };
     
     const handleImageChange = (files: FileList | null) => {
         
@@ -131,7 +140,6 @@ function InventoryProductItemEditForm({product}: Props) {
             
             // Update the form state with the combined files
             form.setValue("images", combinedFiles);
-            console.log(form.getValues("images"));
             
             return combinedFiles; // Return combined files if needed
         }
@@ -274,11 +282,11 @@ function InventoryProductItemEditForm({product}: Props) {
                                     <FormLabel>Quantity in Stock</FormLabel>
                                         <FormControl>
                                             <div className="flex">
-                                                <Button className="w-10 bg-color mx-2" onClick={() => editQuantity("decrement")}>
+                                                <Button type="button" className="w-10 bg-color mx-2" onClick={() => editQuantity("decrement")}>
                                                     -
                                                 </Button>
                                                 <Input type="number" className="text-sm w-10 text-center sm:w-16" {...field} />
-                                                <Button className="w-10 bg-color mx-2" onClick={() => editQuantity("increment")}>
+                                                <Button type="button" className="w-10 bg-color mx-2" onClick={() => editQuantity("increment")}>
                                                     +
                                                 </Button>
                                             </div>

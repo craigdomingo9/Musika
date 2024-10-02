@@ -55,6 +55,7 @@ class ProductManager(models.Manager):
     
     def similar(self,product):
         """Return similar products: of the same category."""
+        print(self.get(pk=product).category)
         
         return self.shuffle(
             self.filter(

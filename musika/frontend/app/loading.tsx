@@ -1,14 +1,14 @@
-import { Button } from '@/components/ui/button'
-import { Loader2 } from 'lucide-react'
+"use client";
 import React from 'react'
+import { BarLoader } from "react-spinners";
 
 function loading() {
   return (
     <div className='grid h-screen'>
-      <Button disabled variant={"ghost"} className='m-auto'>
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        Please wait...
-    </Button>
+      <BarLoader
+        color="#dec42d"
+        className='m-auto'
+        />
     </div>
   )
 }

@@ -152,3 +152,14 @@ html,div,* {
 
 
 
+
+
+
+@font-face {
+    font-family: youtube_font;
+    src: url(fonts/YouTubeSansRegular.otf);
+}
+
+div {
+    font-family: youtube_font;
+}

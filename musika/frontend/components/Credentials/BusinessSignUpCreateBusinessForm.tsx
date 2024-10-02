@@ -69,7 +69,7 @@ function BusinessSignUpCreateBusinessForm() {
         formData.append('description', data.description);
         formData.append('categories', data.categories); // Handle optional
         formData.append('logo', data.logo); // Append the logo file if it exists
-        formData.append('phone_number', data.phone_number);
+        formData.append('phone_number', `+${data.phone_number}`);
         formData.append('email', data.email);
 
 

@@ -19,6 +19,7 @@ import { verifyToken } from "@/middleware/auth";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CheckIcon, Loader2 } from "lucide-react";
+import useActionStore from "@/stores/ActionStore";
 
 const formSchema = z.object({
     email: z.string().email("Invalid email address"),
@@ -39,6 +40,7 @@ function LoginForm() {
     })
 
     const [loadingState, setLoadingState] = useState<string>();
+    const {tertiaryActionOccured,toggleTertiaryActionOccurred} = useActionStore();
     const router = useRouter()
     
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -82,8 +84,9 @@ function LoginForm() {
             duration: 3000,
         })
 
+        verifyToken(router);
         setTimeout(() => {
-            verifyToken(router);
+            toggleTertiaryActionOccurred(!tertiaryActionOccured);
         }, 1000);
         // Save the token or redirect user as needed
     }

@@ -1,12 +1,16 @@
+
+const hour = 60 * 60;
 const variables = {
+
     caching: {
-        categories: 60,
-        products: 1,
-        product_details: 1,
-        business: 1,
-        catalogs: 1,
-        bag: 1,
-        profile: 1,
+        categories: hour,
+        searchQueries: hour,
+        products: hour,
+        product_details: hour,
+        business: hour,
+        catalogs: hour,
+        bag: hour,
+        profile: hour,
     }
 }
 

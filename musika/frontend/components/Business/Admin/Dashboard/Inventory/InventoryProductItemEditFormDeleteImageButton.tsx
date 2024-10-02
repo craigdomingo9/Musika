@@ -25,16 +25,25 @@ type Props = {
 function InventoryProductItemEditFormDeleteImageButton({product,index}: Props) {
     const { actionOccurred, toggleActionOccurred } = useActionStore();
     
-    async function deleteImage(){
-        if(await productDelete(product.images[index].id.toString(),true)){
+    const deleteImage = async () => {
+        try {
+            const success = await productDelete(product.images[index].id.toString(), true);
+            if (success) {
+                toast({
+                    variant: "green",
+                    description: "Image was removed successfully",
+                    duration: 1500,
+                });
+                toggleActionOccurred(!actionOccurred);
+            }
+        } catch (error) {
             toast({
-                variant: "green",
-                description: "Image was removed sucessfully",
-                duration: 1500,
-            })
+                variant: "destructive",
+                description: "Failed to remove image. Please try again.",
+                duration: 3000,
+            });
         }
-        toggleActionOccurred(!actionOccurred);
-    }
+    };
 
     
 

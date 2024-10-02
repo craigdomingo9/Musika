@@ -3,29 +3,36 @@ function capitalizeFirstLetter(word: string): string {
     return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
-const measurePrettier = (measure: string) => {
-    return measure.split("_").map((word: any) => word = capitalizeFirstLetter(word)).join(" ")
+const measurePrettier = (measure: string): string => {
+    return measure
+        .split("_")
+        .map((word: string) => capitalizeFirstLetter(word))
+        .join(" ");
 }
 
-const makeCustomIdentifier = (name: string) : string => {
-    return name.split(" ").join("_").toLowerCase()
-  }
+const makeCustomIdentifier = (name: string): string => {
+    return name.split(" ").join("_").toLowerCase();
+}
 
-function fix_date(days: number,x:number){
-    const date = new Date()
-
-    date.setDate(date.getDate() - (days - x))
-
-    const temp_date = date.toLocaleDateString()
-
-    const day = Number(temp_date.split("/")[1])
-    const month = Number(temp_date.split("/")[0])
-    const year = Number(temp_date.split("/")[2])
-
-    const fixed_date = `${year}-${month<10?0:""}${month}-${day<10?0:""}${day}`
+function fix_date(days: number, x: number) {
+    const date = new Date();
     
-    return fixed_date
+    // Calculate the new date
+    date.setDate(date.getDate() - (days - x));
+
+    // Get the components of the date
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+
+    // Format the fixed date
+    const fixed_date = `${year}-${month}-${day}`;
+
+    return fixed_date;
 }
+
+// Example usage
+console.log(fix_date(10, 3)); // Output: "YYYY-MM-DD" format
 
 
 

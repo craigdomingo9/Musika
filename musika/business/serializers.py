@@ -15,16 +15,7 @@ class BusinessCreateSerializer(serializers.ModelSerializer):
         model = Business
         fields = ["name","description","categories","logo","phone_number","email"]
     
-    def is_valid(self):
-        data_keys = sorted(list(dict(self.initial_data).keys()))
-        fields_keys = sorted(list(dict(self.fields).keys()))
 
-        print("\n",data_keys,"\n",fields_keys)
-
-        if data_keys == fields_keys:
-            return True
-        else:
-            return False
 
 class BusinessUpdateSerializer(serializers.ModelSerializer):
 
