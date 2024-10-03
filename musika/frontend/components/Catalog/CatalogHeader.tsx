@@ -1,20 +1,19 @@
-import BackButton from "../BackButton"
+import BackButton from "../BackButton";
 
 
 type Props = {
-  catalog_name : string
+    catalog_name : string
 }
+
 
 function CatalogHeader({catalog_name} : Props) {
 
   return (
-    <header className="w-full min-h-16 grid sticky top-0 z-50 bg-white border-b border-slate-200">
-      <div className="px-2 sm:pl-0 relative py-6 flex justify-center">
-        <div className="absolute left-2">
-          <BackButton />
+    <header className="w-full min-h-14 max-h-16 grid sticky top-0 z-50 bg-white border-b border-slate-200">
+        <div className="px-2 grid grid-cols-[35%_65%] d sm:pl-0 relative py-3">
+            <BackButton />
+            <p className="font-semibold">{catalog_name}</p>
         </div>
-        <p className="font-semibold">{catalog_name}</p>
-      </div>
     </header>
   )
 }

@@ -22,28 +22,14 @@ async function page({params: {business}}: Props) {
         }
     }
     const response = await fetch(url,options);
-    const business_data = (await response.json()) as BusinessDetails;
 
-    const business_description : Business = {
-      code: business_data.code,
-      name: business_data.name,
-      description: business_data.description,
-      categories: business_data.categories,
-      logo: business_data.logo,
-      cover_photo: business_data.cover_photo,
-      phone_number: business_data.phone_number,
-      email: business_data.email,
-      created_at: business_data.created_at,
-      location: business_data.location as BusinessLocation[],
-    }
+    const business_description = (await response.json()) as Business;
 
-    const business_products : Product[] = business_data.products;
 
     
-
   return (
     <div className="sm:mx-[15%]">
-      <BusinessHeader name={business_data.name} />
+      <BusinessHeader name={business_description.name} />
       <BusinessDetails details={business_description} />
       <BusinessMainContent business={business} business_locations={business_description.location} />
     </div>
