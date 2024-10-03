@@ -9,7 +9,7 @@ function logout() {
     Cookies.remove("business_email");
     toast({
         variant: "green",
-        description: "Logged out sucessfully.",
+        description: "Logged out successfully.",
         duration: 3000,
     })
 }
