@@ -5,10 +5,12 @@ from rest_framework.response import Response
 from rest_framework import generics,status
 from django.db.models import Q
 from analytics.models import ProductAnalytics
+from django.shortcuts import get_object_or_404
+
+
+
 
 # Create your views here.
-
-
 class ItemSearchView(APIView):
     serializer_class = ProductSerializer
 
@@ -19,7 +21,6 @@ class ItemSearchView(APIView):
 
         for keyword in keywords:
             filters |= models.Q(description__icontains=keyword) | models.Q(name__icontains=keyword) | models.Q(category__name__icontains=keyword) | models.Q(catalog__name__icontains=keyword) | models.Q(business__name__icontains=keyword) | models.Q(business__description__icontains=keyword)
-                
             
             
             return Response(
@@ -30,6 +31,73 @@ class ItemSearchView(APIView):
             )
 
 
+class ReviewList(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        reviews = product.reviews.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(author=request.user, product=product)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ReviewDetail(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
+
+    def put(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class ReviewDetail(APIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        serializer = ReviewSerializer(review)
+        return Response(serializer.data)
+
+    def put(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        serializer = ReviewSerializer(review, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, product_id, review_id):
+        product = get_object_or_404(Product, id=product_id)
+        review = get_object_or_404(Review, id=review_id, product=product)
+        review.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

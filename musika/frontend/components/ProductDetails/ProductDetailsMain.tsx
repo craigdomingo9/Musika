@@ -33,7 +33,6 @@ async function ProductDetailsMain({ id }: Props) {
 
         return (
             <>  
-                <ProductDetailsAddCurrentProduct product={product} />
                 {product && <ProductAnalyticsViewLogic product={product} />}
                 <ProductDetails product={product} />
                 <SimilarProducts id={product.id} />

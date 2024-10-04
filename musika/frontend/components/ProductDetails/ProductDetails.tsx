@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import ProductDetailsButtons from "./ProductDetailsButtons";
+import ProductDetailsAddCurrentProduct from "@/utils/ProductDetails/ProductDetailsAddCurrentProduct";
 
 type Props = {
     product: Product;
@@ -36,10 +37,12 @@ function ProductDetails({ product }: Props) {
         return () => {
             api.off("select", onSelect); // Cleanup the event listener
         };
-    }, [api]);
+
+    }, [api,product]);
 
     return (
         <div ref={containerRef} className="sm:mt-5 sm:grid sm:grid-cols-[50%_50%] max-w-full">
+            <ProductDetailsAddCurrentProduct product={product} />
             <div className="relative">
                 <Carousel setApi={setApi} opts={{ align: "start", loop: true }}>
                     <CarouselContent className="h-[22rem]">

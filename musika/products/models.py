@@ -1,7 +1,7 @@
 from django.db import models
 from business.models import *
 from .managers import ProductManager,CatalogManager
-
+from profiles.models import Profile
 
 
 
@@ -66,7 +66,19 @@ class Product(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
+
+
+"""   Product Reviews   """
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    content = models.TextField()
+    rating = models.IntegerField()  # Rating out of 5
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.author.username} - {self.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
 
 
 """   Product Image   """

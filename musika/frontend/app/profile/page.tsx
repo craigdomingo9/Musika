@@ -9,21 +9,19 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-
 type Props = {
-  searchParams: {
-    edit: number | undefined;
-  }
+    searchParams: {
+        edit: number | undefined;
+    }
 }
 
 function Profile({searchParams: {edit}}: Props) {
 
-  const [editProfile, setEditProfile] = useState<boolean>(false)
+    const [editProfile, setEditProfile] = useState<boolean>(false)
+    const router = useRouter();
+    const [token, setToken] = useState<string | undefined>(" ")
 
-  const router = useRouter();
-  const [token, setToken] = useState<string | undefined>(" ")
 
- 
 
     useEffect(() => {
         const _token = Cookies.get("token");
@@ -40,7 +38,6 @@ function Profile({searchParams: {edit}}: Props) {
         }
 
         
-
         if (edit && token) {
           setEditProfile(true)
         }
@@ -49,37 +46,36 @@ function Profile({searchParams: {edit}}: Props) {
     },[token])
 
     function editProfilefn(){
-      setEditProfile(!editProfile)
-      if (!editProfile) {
-          router.push("/profile?edit=1")
-      }else{
-          router.push("/profile")
-      }
+        setEditProfile(!editProfile);
+        if (!editProfile) {
+            router.push("/profile?edit=1")
+        }else{
+            router.push("/profile")
+        }
     }
 
-    
-  return (
-    <div className="w-full overflow-x-hidden relative min-h">
+    if (token) return (
+        <div className="w-full overflow-x-hidden relative min-h">
 
-      <ProfileHeader />
+        <ProfileHeader />
 
-      <div className="flex justify-center pt-2 [&>Button]:w-[95%] sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem] sm:mx-auto">
-        <Button variant="outline" className="text-start " onClick={() => editProfilefn()}>
-            <p>Edit Profile</p>
-            {editProfile ? (
-                <ChevronDown className="h-4 w-4" />
-            ):(
-                <ChevronRight className="h-4 w-4" />
-            )}
-        </Button>
-      </div>
+        <div className="flex justify-center pt-2 [&>Button]:w-[95%] sm:w-[40rem] md:w-[43rem] lg:w-[45rem] xl:w-[55rem] sm:mx-auto">
+            <Button variant="outline" className="text-start " onClick={() => editProfilefn()}>
+                <p>Edit Profile</p>
+                {editProfile ? (
+                    <ChevronDown className="h-4 w-4" />
+                ):(
+                    <ChevronRight className="h-4 w-4" />
+                )}
+            </Button>
+        </div>
 
 
-      {editProfile && (
-        <ProfileEditCreateFormRenderer />
-      )}
-    </div>
-  )
+        {editProfile && (
+            <ProfileEditCreateFormRenderer />
+        )}
+        </div>
+    )
 }
 
 export default Profile

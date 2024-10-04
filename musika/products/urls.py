@@ -15,6 +15,10 @@ urlpatterns = [
     path("explore/",ExploreProductsListView.as_view()),
     path("explore/<str:category>/",ExploreProductsByCategoryListView.as_view()),
     path('search/', ItemSearchView.as_view(), name='item-search'),
+    
+    
+    path('products/<int:product_id>/reviews/', ReviewList.as_view(), name='review-list'),
+    path('products/<int:product_id>/reviews/<int:review_id>/', ReviewDetail.as_view(), name='review-detail'),
 
 
     path("b/<str:business>/", BusinessProductsListView.as_view()),
@@ -28,8 +32,7 @@ urlpatterns = [
     path("<int:product>/",ProductRetrieveView.as_view()),
     path("update/<int:pk>/",ProductUpdateView.as_view()),
     
-
-
+    
 
     path("catalogs/",CatalogListView.as_view()),
     path("catalogs/create/",CatalogCreateView.as_view()),

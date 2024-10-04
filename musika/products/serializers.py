@@ -62,6 +62,13 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
         fields = ["id","name","description","price","on_sale","sale_price","inventory_quantity"]
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return Review.objects.create(**validated_data)
 
 
 class ProductVariantSerializer(serializers.ModelSerializer):

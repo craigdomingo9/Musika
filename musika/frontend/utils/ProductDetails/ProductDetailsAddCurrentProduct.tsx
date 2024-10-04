@@ -23,7 +23,7 @@ function ProductDetailsAddCurrentProduct({ product }: Props) {
 
     useEffect(() => {
         addCurrentProductStore(currentProd);
-    }, []); // Add dependencies to useEffect
+    }, [product]); // Add dependencies to useEffect
 
     return null; // Use null instead of an empty fragment for better clarity
 }
